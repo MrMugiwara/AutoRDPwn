@@ -34,7 +34,7 @@ Powershell 4.0 o superior
 
 # Uso
 Esta aplicación puede usarse de forma local, remota o para pivotar entre equipos. 
-Gracias a los módulos adicionales, es posible volcar hashes y contraseñas o incluso recuperar el histórico de conexiones RDP.
+Gracias a los módulos adicionales, es posible volcar hashes y contraseñas, obtener una shell remota, subir y descargar ficheros o incluso recuperar el histórico de conexiones RDP o las contraseñas de las redes inalámbricas.
 
 **Ejecución en una línea:**
 
@@ -107,8 +107,8 @@ Powershell 4.0 or higher
 
 
 # Use
-This application can be used locally, remotely or to pivot between computers. Thanks to the additional modules, it is possible to dump hashes and passwords or even recover the history of RDP connections.
-
+This application can be used locally, remotely or to pivot between computers.
+Thanks to the additional modules, it is possible to dump hashes and passwords, obtain a remote shell, upload and download files or even recover the history of RDP connections or passwords of wireless networks.
 
 **One line execution:**
 
