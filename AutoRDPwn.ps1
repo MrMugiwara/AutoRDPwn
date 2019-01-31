@@ -472,8 +472,8 @@ if($Language -in 'Spanish') {
    $Host.UI.RawUI.ForegroundColor = 'Green' ; winrm quickconfig -quiet ; Set-Item wsman:\localhost\client\trustedhosts * -Force
    Set-NetConnectionProfile -InterfaceAlias "Ethernet*" -NetworkCategory Private ; Set-NetConnectionProfile -InterfaceAlias "Wi-Fi*" -NetworkCategory Private
    Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name LocalAccountTokenFilterPolicy -Value 1 -Type DWord 2>&1> $null
-   $credential = New-Object System.Management.Automation.PSCredential ( $user, $password ) ; $RDP = New-PSSession -Computer $computer -credential $credential
-   $session = get-pssession ; if ($session){
+   if(!$user) { $RDP = New-PSSession -Computer $computer } ; if($user){ $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )} 
+   $RDP = New-PSSession -Computer $computer -credential $credential ; $session = get-pssession ; if ($session){
 
         do { $Host.UI.RawUI.ForegroundColor = 'Green'
 	if ($stickykeys){ $input = "control" } else { Write-Host ; Write-Host "$txt29" -NoNewLine -ForegroundColor Gray ; $input = $Host.UI.ReadLine() }
