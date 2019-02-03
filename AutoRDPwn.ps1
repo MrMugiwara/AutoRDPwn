@@ -474,13 +474,13 @@ if($Language -in 'Spanish') {
 
         if($module -like 'X'){ $input = 'x' ; continue }
 
-	if($module -in '1','2','3','4','5','6','7','m','x') { $null }
+	if($module -in '1','2','3','4','5','6','m','x') { $null }
         else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}
 
         'X' { continue }
-        default { Write-Host ; Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','3','4','5','6','X')
+        default { Write-Host ; Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','3','4','5','6','7','X')
 
-   if($input -in '1','2','3','4','5'){ $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host ; if($hash){ echo "AutoRDPwn" > credentials.dat
+   if($input -in '1','2','3','4','5','7'){ $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host ; if($hash){ echo "AutoRDPwn" > credentials.dat
    $user = type credentials.dat ; $password = type credentials.dat | ConvertTo-SecureString -AsPlainText -Force ; del credentials.dat }
    $Host.UI.RawUI.ForegroundColor = 'Green' ; winrm quickconfig -quiet ; Set-Item wsman:\localhost\client\trustedhosts * -Force
    Set-NetConnectionProfile -InterfaceAlias "Ethernet*" -NetworkCategory Private ; Set-NetConnectionProfile -InterfaceAlias "Wi-Fi*" -NetworkCategory Private
