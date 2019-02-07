@@ -271,13 +271,14 @@ if($Language -in 'Spanish') {
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
         if(!$PlainTextPassword) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
 	if(!$user) { Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn1 2>&1> $null ; Write-Host
-	if($? = $true) { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
-        Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn2 2>&1> $null ; Write-Host
-	if($? = $true) { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	Write-Host "[+] Command was executed successfully!"
+	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn2 2>&1> $null ; Write-Host
+	Write-Host "[+] Command was executed successfully!"
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn3 2>&1> $null ; Write-Host
-	if($? = $true) { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	Write-Host "[+] Command was executed successfully!"
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn4 2>&1> $null ; Write-Host
-	if($? = $true) { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}
+	Write-Host "[+] Command was executed successfully!" }
+	if($? = $true) {  } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}
         if($user) { wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn1"
         wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn2"
         wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn3"
