@@ -8,6 +8,7 @@ The script automatically implements the above operation,there is no need for a G
 Author: 3gstudent@3gstudent
 License: BSD 3-Clause
 #>
+$ErrorActionPreference = "SilentlyContinue"
 function ListAllUsers {
 $nouser='DefaultAccount','Guest','defaultuser0','Invitado','WDAGUtilityAccount','HomeGroupUser$'
 $AllUser = Get-WmiObject -Class Win32_UserAccount | where{$_.Name -notin $nouser} 
@@ -66,4 +67,3 @@ foreach($User in $AllUser)
 		}
 	}
 	Write-Output "----------------------------------"	}}
-	
