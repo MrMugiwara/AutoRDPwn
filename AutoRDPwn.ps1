@@ -270,7 +270,7 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
         if(!$PlainTextPassword) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
-	if(!$user) { Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn1 2>&1> $null ; Write-Host
+	if(!$user) { Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn1 2>&1> $null
 	Write-Host "[+] Command was executed successfully!"
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn2 2>&1> $null ; Write-Host
 	Write-Host "[+] Command was executed successfully!"
