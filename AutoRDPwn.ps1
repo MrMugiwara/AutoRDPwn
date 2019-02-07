@@ -278,7 +278,6 @@ if($Language -in 'Spanish') {
 	Write-Host "[+] Command was executed successfully!"
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn4 2>&1> $null ; Write-Host
 	Write-Host "[+] Command was executed successfully!" }
-	if($? = $true) {  } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}
         if($user) { wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn1"
         wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn2"
         wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn3"
