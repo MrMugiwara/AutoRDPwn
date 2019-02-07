@@ -25,8 +25,6 @@ foreach($User in $AllUser)
 		Write-Output "[*]Try to load Hive"
 		$File = "C:\Documents and Settings\"+$User.Name+"\NTUSER.DAT"
 		$Path = "HKEY_USERS\"+$User.SID
-		Write-Output "[+]Path:"$Path 
-		Write-Output "[+]File:"$File
 		Reg load $Path $File
 		If(!$?)
 		{
