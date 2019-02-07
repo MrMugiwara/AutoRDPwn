@@ -14,41 +14,41 @@ $AllUser = Get-WmiObject -Class Win32_UserAccount | where{$_.Name -notin $nouser
 foreach($User in $AllUser)
 {
 	$RegPath = "Registry::HKEY_USERS\"+$User.SID+"\Software\Microsoft\Terminal Server Client\Servers\"
-	Write-Host "User:"$User.Name
-	Write-Host "SID:"$User.SID
-	Write-Host "Status:"$User.Status
+	Write-Output "User:"$User.Name
+	Write-Output "SID:"$User.SID
+	Write-Output "Status:"$User.Status
 	$QueryPath = dir $RegPath -Name -ErrorAction SilentlyContinue
 	If(!$?)
 	{
-		Write-Host "[!]Not logged in"
-		Write-Host "[*]Try to load Hive"
+		Write-Output "[!]Not logged in"
+		Write-Output "[*]Try to load Hive"
 		$File = "C:\Documents and Settings\"+$User.Name+"\NTUSER.DAT"
 		$Path = "HKEY_USERS\"+$User.SID
-		Write-Host "[+]Path:"$Path 
-		Write-Host "[+]File:"$File
+		Write-Output "[+]Path:"$Path 
+		Write-Output "[+]File:"$File
 		Reg load $Path $File
 		If(!$?)
 		{
-			Write-Host "[!]Fail to load Hive"
-			Write-Host "[!]No RDP Connections History"
+			Write-Output "[!]Fail to load Hive"
+			Write-Output "[!]No RDP Connections History"
 		}
 		Else
 		{
 			$QueryPath = dir $RegPath -Name -ErrorAction SilentlyContinue
 			If(!$?)
 			{
-				Write-Host "[!]No RDP Connections History"
+				Write-Output "[!]No RDP Connections History"
 			}
 			Else
 			{
 				foreach($Name in $QueryPath)
 				{   
 					$User = (Get-ItemProperty -Path $RegPath$Name -ErrorAction Stop).UsernameHint
-					Write-Host "Server:"$Name
-					Write-Host "User:"$User
+					Write-Output "Server:"$Name
+					Write-Output "User:"$User
 				}
 			}
-			Write-Host "[*]Try to unload Hive"
+			Write-Output "[*]Try to unload Hive"
 			Start-Process powershell.exe -WindowStyle Hidden -ArgumentList "Reg unload $Path"		
 		}
 	}
@@ -57,12 +57,13 @@ foreach($User in $AllUser)
 		Try  
 		{  
 			$User = (Get-ItemProperty -Path $RegPath$Name -ErrorAction Stop).UsernameHint
-			Write-Host "Server:"$Name
-			Write-Host "User:"$User
+			Write-Output "Server:"$Name
+			Write-Output "User:"$User
 		}
 		Catch  
 		{
-			Write-Host "[!]No RDP Connections History"
+			Write-Output "[!]No RDP Connections History"
 		}
 	}
-	Write-Host "----------------------------------"	}}
+	Write-Output "----------------------------------"	}}
+	
