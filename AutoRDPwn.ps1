@@ -251,7 +251,7 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray
-        $domain = $Host.UI.ReadLine() ; if(!$domain) { $computer = 'localhost' ; Write-Host "localhost" }
+        $domain = $Host.UI.ReadLine() ; if(!$domain) { $domain = 'localhost' ; Write-Host "localhost" }
         Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray
         $hash = $Host.UI.ReadLine()
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
