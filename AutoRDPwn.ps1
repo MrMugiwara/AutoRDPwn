@@ -285,7 +285,7 @@ if($Language -in 'Spanish') {
 	Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn3 2>&1> $null ; Write-Host
 	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn4 2>&1> $null ; Write-Host
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}}
 
         '4' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
