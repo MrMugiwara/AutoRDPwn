@@ -194,7 +194,7 @@ function Invoke-DCOM {
 
     End {
 
-        Write-Host "[+] Command executed successfully"
+        Write-Host "[+] Command executed successfully" ; Write-Host
     }
     
 
