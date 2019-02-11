@@ -308,9 +308,10 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
         $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
+        do { $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $txt6 -ForegroundColor Red }} until ( $PlainTextPassword )
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
-        $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
+        do { $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
+	if(!$password) { Write-Host $txt6 -ForegroundColor Red }} until ( $PlainTextPassword )
 	if(!$PlainTextPassword) { Write-Host "********" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
