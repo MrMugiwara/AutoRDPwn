@@ -229,8 +229,9 @@ if($Language -in 'Spanish') {
         '1' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray
         $computer = $Host.UI.ReadLine() ; if(!$computer) { $computer = 'localhost' ; Write-Host "localhost" }
-        Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray
-        $user = $Host.UI.ReadLine() ; if(!$user) { Write-Host $currentuser.split('\')[1].trim() }
+        Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+	$user = $Host.UI.ReadLine() ; if(!$user) { [Console]::SetCursorPosition(0,"$cursortop")
+	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
 	if(!$PlainTextPassword) { Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
