@@ -64,6 +64,15 @@ function Test-Command {
     Catch {RETURN $false}
     Finally {$ErrorActionPreference=$oldPreference}}
 
+function Remove-Exclusions-All { 
+    $Preferences = Get-MpPreference
+    $Exclusion1 = $Preferences.ExclusionPath
+    foreach ($path in $Exclusion1) { Remove-MpPreference -ExclusionPath $path }
+    $Exclusion2 = $Preferences.ExclusionExtension
+    foreach ($exe in $Exclusion2) { Remove-MpPreference -ExclusionExtension $exe }
+    $Exclusion3 = $Preferences.ExclusionProcess
+    foreach ($process in $Exclusion3) { Remove-MpPreference -ExclusionProcess $process }}
+
     do { Show-Banner ; Show-Language
     $help = 'The detailed guide of use can be found at the following link:'
     $Random = New-Object System.Random ; "Choose your language:` " -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
