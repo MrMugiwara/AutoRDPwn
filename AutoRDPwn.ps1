@@ -323,13 +323,14 @@ if($Language -in 'Spanish') {
         Write-Host ; Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
 	$user = $Host.UI.ReadLine() ; if(!$user) { [Console]::SetCursorPosition(0,"$cursortop")
 	Write-Host "$txt24" -NoNewLine -ForegroundColor Gray ; Write-Host $currentuser.split('\')[1].trim() }
-        do { Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $password = $Host.UI.ReadLineAsSecureString()
-	$PlainTextPassword = ConvertFrom-SecureToPlain $password ; if(!$PlainTextPassword) { Write-Host ; Write-Host $txt6 -ForegroundColor Red
-	sleep -milliseconds 2500 }} until ( $PlainTextPassword ) ; $Host.UI.RawUI.ForegroundColor = 'Blue'
+        do { Write-Host ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
+	$password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
+	if(!$PlainTextPassword) { Write-Host ; Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $PlainTextPassword )
+	$Host.UI.RawUI.ForegroundColor = 'Blue' ; $cursortop = [System.Console]::get_CursorTop() ; Write-Host
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
         WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn3"
-        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn4" }
+        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn4" ; Write-Host }
 
 	'6' {
         Write-Host ; $test = Test-Command tscon ; if($test -in 'True'){ Write-Host "$txt28" -ForegroundColor Blue ; Write-Host
