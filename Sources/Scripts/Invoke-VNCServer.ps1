@@ -31,4 +31,4 @@ REG ADD "HKLM\SOFTWARE\WOW6432Node\ORL\WinVNC3\Default" /v "PasswordViewOnly" /t
 netsh advfirewall firewall delete rule name="TightVNC Win32 Server" 2>&1> $null
 netsh advfirewall firewall add rule name="TightVNC Win32 Server" dir=in protocol=udp action=allow program="$path\VNCServer.exe" enable=yes 2>&1> $null
 netsh advfirewall firewall add rule name="TightVNC Win32 Server" dir=in protocol=tcp action=allow program="$path\VNCServer.exe" enable=yes 2>&1> $null
-.\VNCServer.exe -install -service 2>&1> $null ; sleep 10 ; stop-service winvnc 2>&1> $null ; start-service  winvnc 2>&1> $null
+.\VNCServer.exe -install -service 2>&1> $null ; sleep -milliseconds 4500 ; stop-service winvnc 2>&1> $null ; start-service  winvnc 2>&1> $null
