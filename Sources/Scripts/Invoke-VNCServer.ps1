@@ -29,6 +29,6 @@ REG ADD "HKLM\SOFTWARE\WOW6432Node\ORL\WinVNC3\Default" /v "Password" /t REG_BIN
 REG ADD "HKLM\SOFTWARE\WOW6432Node\ORL\WinVNC3\Default" /v "PasswordViewOnly" /t REG_BINARY /d 2b1990ff70c9ba81 /f 2>&1> $null
 
 netsh advfirewall firewall delete rule name="TightVNC Win32 Server" 2>&1> $null
-netsh advfirewall firewall add rule name="TightVNC Win32 Server" dir=in protocol=udp action=allow program="$path\VNCServer.exe" enable=yes 2>&1> $null
-netsh advfirewall firewall add rule name="TightVNC Win32 Server" dir=in protocol=tcp action=allow program="$path\VNCServer.exe" enable=yes 2>&1> $null
+netsh advfirewall firewall add rule name="TightVNC Win32 Server" dir=in protocol=udp action=allow program="$pwd\VNCServer.exe" enable=yes 2>&1> $null
+netsh advfirewall firewall add rule name="TightVNC Win32 Server" dir=in protocol=tcp action=allow program="$pwd\VNCServer.exe" enable=yes 2>&1> $null
 .\VNCServer.exe -install -service 2>&1> $null ; sleep -milliseconds 4500 ; stop-service winvnc 2>&1> $null ; start-service  winvnc 2>&1> $null
