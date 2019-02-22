@@ -10,24 +10,24 @@ Powershell 4.0 o superior
 
 # Cambios
 
-## Versión 4.6
-• Nueva interfaz de usuario totalmente rediseñada
+## Versión 4.8
+• Compatibilidad con Powershell 4.0
 
-• Ejecución en memoria mejorada
+• Copia automática del contenido al portapapeles (contraseñas, hashes, dumps, etc..)
 
-• Ahora los binarios se descargan en base64 y se generan en local
+• Exclusión automática en Windows Defender (4 métodos diferentes)
 
-• Nuevo módulo disponible: Consola de Netcat (conexión directa e inversa)
+• Ejecución remota sin contraseña para PSexec, WMI e Invoke-Command
 
-• Nuevo módulo disponible: Recuperar contraseñas de los navegadores con SharpWeb
+• Nuevo ataque disponible : DCOM Passwordless Execution
 
-• Nuevo módulo disponible: Recuperar contraseñas Wi-Fi
+• Nuevo módulo disponible: Acceso Remoto / Metasploit Web Delivery
 
-• Nuevo módulo disponible: TCP Port Scan
+• Nuevo módulo disponible: Servidor VNC Remoto (diseñado para entornos legacy)
 
-• Nuevo módulo disponible: Local Port Forwarding
+• Autocompletado de los campos host, usuario y contraseña pulsando Enter
 
-• Nuevo módulo disponible: Powershell Web Server
+• Ahora es posible ejecutar la herramienta sin privilegios de administrador con el parámetro -noadmin
 
 *El resto de cambios se pueden consultar en el fichero CHANGELOG
 
@@ -84,24 +84,24 @@ Powershell 4.0 or higher
 
 
 # Changes
-## Version 4.6
-• New completely redesigned user interface
+## Version 4.8
+• Compatibility with Powershell 4.0
 
-• Improved memory execution
+• Automatic copy of the content to the clipboard (passwords, hashes, dumps, etc.)
 
-• Binaries are now downloaded in base64 and generated locally
+• Automatic exclusion in Windows Defender (4 different methods)
 
-• New module available: Netcat console (bind and reverse)
+• Remote execution without password for PSexec, WMI and Invoke-Command
 
-• New module available: Recover passwords from browsers with SharpWeb
+• New available attack: DCOM Passwordless Execution
 
-• New module available: Recover Wi-Fi passwords
+• New available module: Remote Access / Metasploit Web Delivery
 
-• New module available: TCP Port Scan
+• New module available: Remote VNC Server (designed for legacy environments)
 
-• New module available: Local Port Forwarding
+• Autocomplete the host, user and password fields by pressing Enter
 
-• New module available: Powershell Web Server
+• It is now possible to run the tool without administrator privileges with the -noadmin parameter
 
 *The rest of the changes can be consulted in the CHANGELOG file
 
