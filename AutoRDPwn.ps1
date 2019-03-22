@@ -235,7 +235,7 @@ if($Language -in 'Spanish') {
 
     do { Show-Banner ; Show-Menu  
     $Random = New-Object System.Random ; $txt7 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
-    $Host.UI.RawUI.ForegroundColor = 'Green' ; $input = $Host.UI.ReadLine() ; switch ($input) { $currentuser = [Environment]::username
+    $Host.UI.RawUI.ForegroundColor = 'Green' ; $currentuser = [Environment]::username ; $input = $Host.UI.ReadLine() ; switch ($input) {
 
         '1' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
