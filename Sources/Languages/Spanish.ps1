@@ -1,3 +1,5 @@
+﻿[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
+ 
 $txt1  = "Cargar módulos adicionales"
 $txt2  = "Cerrar el programa"
 $txt3  = "Tu versión de Powershell no es compatible con este script :("
