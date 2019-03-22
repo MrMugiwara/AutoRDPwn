@@ -78,6 +78,11 @@ function Remove-Exclusions {
     switch ($input) {
        '1' { $Language = 'English' }
        '2' { $Language = 'Spanish' }
+       '3' { $Language = 'French' }
+       '4' { $Language = 'German' }
+       '5' { $Language = 'Italian' }
+       '6' { $Language = 'Russian' }
+       '7' { $Language = 'Portuguese' }
        'H' { Write-Host ; Write-Host $help -ForegroundColor Green ; Write-Host ; Write-Host 'https://darkbyte.net/autordpwn-la-guia-definitiva' -ForegroundColor Blue ; sleep -milliseconds 7500 }
        'X' { continue }
     default { Write-Host ; Write-Host "Wrong option, please try again" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','X') if($input -in '1','2'){    
