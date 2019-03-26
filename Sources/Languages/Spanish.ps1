@@ -1,4 +1,4 @@
-﻿[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
+[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
  
 $txt1  = "Cargar módulos adicionales"
 $txt2  = "Cerrar el programa"
