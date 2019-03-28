@@ -165,21 +165,21 @@ function Remove-Exclusions {
 	if(!$credential) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" }
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue' }
 	if(!$user) { Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn1 2>&1> $null
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[-] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn2 2>&1> $null ; Write-Host
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[-] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn3 2>&1> $null ; Write-Host
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[-] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -path win32_process -name create -argumentList $Pwn4 2>&1> $null ; Write-Host
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[-] Command execution failed!" -ForegroundColor Red }}
         if($user) { Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn1 2>&1> $null
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[-] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn2 2>&1> $null ; Write-Host
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[-] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn3 2>&1> $null ; Write-Host
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[-] Command execution failed!" -ForegroundColor Red }
 	Invoke-WmiMethod -computer $computer -credential $credential -path win32_process -name create -argumentList $Pwn4 2>&1> $null ; Write-Host
-	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[+] Command execution failed!" -ForegroundColor Red }}}
+	if($? -eq 'True') { Write-Host "[+] Command was executed successfully!" } else { Write-Host "[-] Command execution failed!" -ForegroundColor Red }}}
 
         '4' {
         if($option) { $computer='localhost' } else {
