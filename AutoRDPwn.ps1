@@ -75,7 +75,8 @@ function Remove-Exclusions {
     $exclusion = Get-MpPreference ; $exclusion.exclusionprocess | % { Remove-MpPreference -ExclusionProcess $_ 2>&1> $null }
     $exclusion = Get-MpPreference ; $exclusion.exclusionpath | % { Remove-MpPreference -ExclusionPath $_ 2>&1> $null }
     $exclusion = Get-MpPreference ; $exclusion.exclusionextension | % { Remove-MpPreference -ExclusionExtension $_ 2>&1> $null }
-    Set-MpPreference -DisableIOAVProtection 0 2>&1> $null ; Clear-Item -Path WSMan:localhostClientTrustedHosts -Force 2>&1> $null } 
+    Set-MpPreference -DisableIOAVProtection 0 2>&1> $null ; Clear-Item -Path WSMan:localhostClientTrustedHosts -Force 2>&1> $null 
+    Set-MpPreference -SubmitSamplesConsent 1 2>&1> $null ; Set-MpPreference -MAPSReporting Enabled 2>&1> $null } 
 
     $system = (Get-WmiObject Win32_OperatingSystem).OSArchitecture ; if(!$nogui){ 
     $help = "The detailed guide of use can be found at the following link:"
@@ -103,7 +104,7 @@ function Remove-Exclusions {
     $powershell = $host.version ; Write-Host ; if($powershell.major -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host
     Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red' ; Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; sleep -milliseconds 7500 ; exit }
     Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null; Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null
-    Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null
+    Add-MpPreference -ExclusionExtension ".ps1" 2>&1> $null ; Set-MpPreference -DisableIOAVProtection 1 2>&1> $null ; Set-MpPreference -SubmitSamplesConsent 0 2>&1> $null ; Set-MpPreference -MAPSReporting Disabled 2>&1> $null
 
     do { Show-Banner ; Show-Menu
     $currentuser = [Environment]::username ; if($option -like '-option') { $input=$args[5] } else { 
