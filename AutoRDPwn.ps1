@@ -441,8 +441,10 @@ function Remove-Exclusions {
         
 	if($othermodule -like '3') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host
         Write-Host "$txt73" -NoNewLine -ForegroundColor Gray ; $externalscript = $Host.UI.ReadLine() ; Write-Host
-        $Host.UI.RawUI.ForegroundColor = 'Gray' ; Invoke-Expression (New-Object Net.WebClient).DownloadString("$externalscript")
-        Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
+        Write-Host "$txt74" -NoNewLine -ForegroundColor Gray ; $externalfunction = $Host.UI.ReadLine() ; Write-Host
+        $Host.UI.RawUI.ForegroundColor = 'Gray' ; if($externalscript -like 'http*') { Invoke-Expression (New-Object Net.WebClient).DownloadString("$externalscript") }
+        else { Import-Module $externalscript ; Invoke-Expression $externalscript }
+        if($externalfunction = $null){ $null } else { Invoke-Expression $externalfunction } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($othermodule -like 'X'){ $input = 'x' ; continue }
         if($othermodule -in '1','2','3','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
