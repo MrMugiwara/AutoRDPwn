@@ -441,9 +441,9 @@ function Remove-Exclusions {
 	if($othermodule -like '2'){ $vncserver ="true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 }
         
 	if($othermodule -like '3') { Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 ; Write-Host
-        Write-Host "$txt73" -NoNewLine -ForegroundColor Gray ; $externalscript = $Host.UI.ReadLine() ; Write-Host
-        Write-Host "$txt74" -NoNewLine -ForegroundColor Gray ; $externalfunction = $Host.UI.ReadLine() ; Write-Host
-	$Host.UI.RawUI.ForegroundColor = 'Gray' ; if(!$externalscript) { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }
+        do { Write-Host "$txt73" -NoNewLine -ForegroundColor Gray ; $externalscript = $Host.UI.ReadLine() ; Write-Host
+	$Host.UI.RawUI.ForegroundColor = 'Gray' ; if(!$externalscript) { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
+	until ( $externalscript) ; Write-Host "$txt74" -NoNewLine -ForegroundColor Gray ; $externalfunction = $Host.UI.ReadLine() ; Write-Host
 	Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 	if($externalscript -like 'http*') { Invoke-Expression (New-Object Net.WebClient).DownloadString("$externalscript") } 
 	else { Import-Module $externalscript } ; if($externalfunction){ Invoke-Expression $externalfunction }
