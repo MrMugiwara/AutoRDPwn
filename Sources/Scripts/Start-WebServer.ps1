@@ -46,6 +46,8 @@ Scheduled tasks are always running with low priority, so some functions might be
 Version 1.1, 2017-11-23
 Author: Markus Scholtes
 #>
+
+Function Start-WebServer {
 Param([STRING]$BINDING = 'http://+:8080/', [STRING]$BASEDIR = "")
 
 # No adminstrative permissions are required for a binding to "localhost"
@@ -640,4 +642,5 @@ finally
 	$LISTENER.Stop()
 	$LISTENER.Close()
 	"$(Get-Date -Format s) Powershell webserver stopped."
+}
 }
