@@ -1,4 +1,4 @@
-[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
+﻿[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
 
 $txt1  = "Zusätzliche Module laden"
 $txt2  = "Programm schließen"
@@ -31,7 +31,7 @@ $txt28 = "Rechte durch Token-Duplikation erhöhen.."
 $txt29 = "Möchten Sie den Computer sehen oder steuern?:` "
 $txt30 = "Berechtigungen zum Anzeigen des Remote-Computers ändern."
 $txt31 = "Berechtigungen zum Steuern des Remote-Computers ändern."
-$txt32 = "`Änderungen in der Windows-Registrierung erfolgreich durchgeführt!"
+$txt32 = "Änderungen in der Windows-Registrierung erfolgreich durchgeführt!"
 $txt33 = "Betriebssystemversion wird erkannt"
 $txt34 = "erkannt"
 $txt35 = "Suche nach aktiven Sitzungen auf dem Computer."
