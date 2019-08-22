@@ -1,3 +1,15 @@
+# Versión 4.8
+• Compatibilidad con Powershell 4.0
+• Copia automática del contenido al portapapeles (contraseñas, hashes, dumps, etc..)
+• Exclusión automática en Windows Defender (4 métodos diferentes)
+• Ejecución remota sin contraseña para PSexec, WMI e Invoke-Command
+• Nuevo ataque disponible : DCOM Passwordless Execution
+• Nuevo módulo disponible: Acceso Remoto / Metasploit Web Delivery
+• Nuevo módulo disponible: Servidor VNC Remoto (diseñado para entornos legacy)
+• Autocompletado de los campos host, usuario y contraseña pulsando Enter
+• Ahora es posible ejecutar la herramienta sin privilegios de administrador con el parámetro -noadmin
+
+
 # Versión 4.6
 • Nueva interfaz de usuario totalmente rediseñada
 • Ejecución en memoria mejorada
