@@ -78,8 +78,8 @@ https://darkbyte.net/autordpwn-la-guia-definitiva
 
 
 # Capturas de pantalla
-![autordpwn_es1](https://user-images.githubusercontent.com/34335312/49990172-02563880-ff7d-11e8-8031-8ac6fef02107.png)
-![autordpwn_es2](https://user-images.githubusercontent.com/34335312/50776477-624cb000-1299-11e9-8d19-a09c282539d0.png)
+![autordpwn_es1](https://user-images.githubusercontent.com/34335312/63512842-06136500-c4e5-11e9-8cec-4049b95db2c1.png)
+![autordpwn_es2](https://user-images.githubusercontent.com/34335312/63512843-06136500-c4e5-11e9-97a7-3d2a6e4c17e0.png)
 
 
 # Licencia
@@ -199,8 +199,8 @@ https://darkbyte.net/autordpwn-la-guia-definitiva
 
 
 # Screenshots
-![autordpwn_en1](https://user-images.githubusercontent.com/34335312/49990174-02563880-ff7d-11e8-896f-894a961a5214.png)
-![autordpwn_en2](https://user-images.githubusercontent.com/34335312/50776478-624cb000-1299-11e9-8771-8648f559afe5.png)
+![autordpwn_en1](https://user-images.githubusercontent.com/34335312/63512839-06136500-c4e5-11e9-84ec-3a00b76f3ca8.png)
+![autordpwn_en2](https://user-images.githubusercontent.com/34335312/63512840-06136500-c4e5-11e9-8289-c3d06c926061.png)
 
 
 # License
